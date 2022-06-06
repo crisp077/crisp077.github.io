@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>三月江东</title>
+  
+  <subtitle>Make your own way</subtitle>
+  <link href="https://wwww.crisp077.xyz/atom.xml" rel="self"/>
+  
+  <link href="https://wwww.crisp077.xyz/"/>
+  <updated>2022-06-06T15:08:44.021Z</updated>
+  <id>https://wwww.crisp077.xyz/</id>
+  
+  <author>
+    <name>Crisp077</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>C++核心编程——5 文件操作</title>
+    <link href="https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%945-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/"/>
+    <id>https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%945-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</id>
+    <published>2022-06-06T15:08:00.000Z</published>
+    <updated>2022-06-06T15:08:44.021Z</updated>
+    
+    
+    <summary type="html">&lt;h4 id=&quot;5-文件操作&quot;&gt;&lt;a href=&quot;#5-文件操作&quot; class=&quot;headerlink&quot; title=&quot;5 文件操作&quot;&gt;&lt;/a&gt;5 文件操作&lt;/h4&gt;&lt;p&gt;​	程序运行时产生的数据都属于临时数据，程序一旦运行结束都会被释放&lt;/p&gt;
+&lt;p&gt;​	通过&lt;strong&gt;文件可以将数据持久化&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	C++中对文件操作需要包含头文件&lt;code&gt;&amp;lt; fstream &amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;​	文件类型分为两种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;文本文件：文件以文本的&lt;strong&gt;ASCII码&lt;/strong&gt;形式储存在计算机中&lt;/li&gt;
+&lt;li&gt;二进制文件：文件以文本的&lt;strong&gt;二进制形式&lt;/strong&gt;存储在计算机就中，用户一般不能直接读懂他们&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;​	&lt;/p&gt;
+&lt;p&gt;​	操作文件的三大类：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ofstream&lt;/code&gt;：写操作&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ifstream&lt;/code&gt;：读操作&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fstream &lt;/code&gt;  ：读写操作&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    
+    <category term="C++" scheme="https://wwww.crisp077.xyz/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++核心编程——4 类和对象- 4.7 多态</title>
+    <link href="https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%944-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1-4-7-%E5%A4%9A%E6%80%81/"/>
+    <id>https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%944-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1-4-7-%E5%A4%9A%E6%80%81/</id>
+    <published>2022-06-06T15:04:51.000Z</published>
+    <updated>2022-06-06T15:05:33.949Z</updated>
+    
+    
+    <summary type="html">&lt;h5 id=&quot;4-7-多态&quot;&gt;&lt;a href=&quot;#4-7-多态&quot; class=&quot;headerlink&quot; title=&quot;4.7 多态&quot;&gt;&lt;/a&gt;4.7 多态&lt;/h5&gt;&lt;h6 id=&quot;4-7-1-多态的基本概念&quot;&gt;&lt;a href=&quot;#4-7-1-多态的基本概念&quot; class=&quot;headerlink&quot; title=&quot;4.7.1 多态的基本概念&quot;&gt;&lt;/a&gt;4.7.1 多态的基本概念&lt;/h6&gt;&lt;pre&gt;&lt;code&gt;**多态是C++面向对象三大特性之一**
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;​	&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;多态分为两类：
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;静态多态：函数重载 和 运算符重载属于静态多态，复用函数名&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;动态多态：派生类和虚函数实现运行时多态&lt;/p&gt;
+&lt;p&gt;  静态多态和动态多态的区别：&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;静态多态的函数地址早绑定 - 编译阶段确定函数地址&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;动态多态的函数地址晚绑定 - 运行阶段确定函数地址&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    
+    <category term="C++" scheme="https://wwww.crisp077.xyz/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++核心编程——4 类和对象- 4.6 继承</title>
+    <link href="https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%944-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1-4-6-%E7%BB%A7%E6%89%BF/"/>
+    <id>https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%944-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1-4-6-%E7%BB%A7%E6%89%BF/</id>
+    <published>2022-06-06T15:03:40.000Z</published>
+    <updated>2022-06-06T15:04:30.423Z</updated>
+    
+    
+    <summary type="html">&lt;h5 id=&quot;4-6-继承&quot;&gt;&lt;a href=&quot;#4-6-继承&quot; class=&quot;headerlink&quot; title=&quot;4.6 继承&quot;&gt;&lt;/a&gt;4.6 继承&lt;/h5&gt;&lt;pre&gt;&lt;code&gt;**继承是面向对象三大特性之一**
+
+有些类与类之间存在特殊关系，定义某些类时，下级别的成员除了拥有上一级的共性，还有自己的特性
+
+这个时候我们就可以考虑利用继承的技术，减少重复代码
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h6 id=&quot;4-6-1-继承的基本语法&quot;&gt;&lt;a href=&quot;#4-6-1-继承的基本语法&quot; class=&quot;headerlink&quot; title=&quot;4.6.1 继承的基本语法&quot;&gt;&lt;/a&gt;4.6.1 继承的基本语法&lt;/h6&gt;&lt;pre&gt;&lt;code&gt;**语法：**`class 子类 : 继承方式 父类`
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;子类 也称为 派生类&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;父类 也称为 基类&lt;/p&gt;
+&lt;p&gt;  例如我们看到很多网站中，都有公共的头部，公共的的底部，甚至公共的左侧列表，只有中心内容不同&lt;/p&gt;
+&lt;p&gt;  接下来我们分别利用普通写法和继承写法来实现网页中的内容，看一下继承存在的意义以及好处&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    
+    <category term="C++" scheme="https://wwww.crisp077.xyz/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++核心编程——4 类和对象- 4.5 运算符重载</title>
+    <link href="https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%944-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1-4-5-%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD/"/>
+    <id>https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%944-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1-4-5-%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD/</id>
+    <published>2022-06-06T15:02:33.000Z</published>
+    <updated>2022-06-06T15:03:20.269Z</updated>
+    
+    
+    <summary type="html">&lt;h5 id=&quot;4-5-运算符重载&quot;&gt;&lt;a href=&quot;#4-5-运算符重载&quot; class=&quot;headerlink&quot; title=&quot;4.5 运算符重载&quot;&gt;&lt;/a&gt;4.5 运算符重载&lt;/h5&gt;&lt;pre&gt;&lt;code&gt;运算符重载概念：对已有的运算符重新进行定义，赋予其另一种功能，以适应不同的数据类型
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h6 id=&quot;4-5-1-加号运算符重载&quot;&gt;&lt;a href=&quot;#4-5-1-加号运算符重载&quot; class=&quot;headerlink&quot; title=&quot;4.5.1 加号运算符重载&quot;&gt;&lt;/a&gt;4.5.1 加号运算符重载&lt;/h6&gt;&lt;pre&gt;&lt;code&gt;作用：实现两个自定义数据类型相加的运算
+&lt;/code&gt;&lt;/pre&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;53&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;54&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;55&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;56&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;57&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;58&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//加号运算符重载&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title class_&quot;&gt;Person&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;type&quot;&gt;int&lt;/span&gt; m_A;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;type&quot;&gt;int&lt;/span&gt; m_B;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//1、成员函数重载+号运算符&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;/*Person operator+(Person&amp;amp; p)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;	&amp;#123;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;		Person temp;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;		temp.m_A = this-&amp;gt;m_A + p.m_A;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;		temp.m_B = this-&amp;gt;m_B + p.m_B;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;		return temp;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;	&amp;#125;*/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//2、全局函数重载+号&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Person &lt;span class=&quot;keyword&quot;&gt;operator&lt;/span&gt;+(Person&amp;amp; p1, Person&amp;amp; p2)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	Person temp;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	temp.m_A = p1.m_A + p2.m_A;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	temp.m_B = p1.m_B + p2.m_B;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; temp;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Person &lt;span class=&quot;keyword&quot;&gt;operator&lt;/span&gt;+(Person&amp;amp; p1, &lt;span class=&quot;type&quot;&gt;int&lt;/span&gt; num)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	Person temp;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	temp.m_A = p1.m_A + num;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	temp.m_B = p1.m_B + num;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; temp;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;type&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;test01&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	Person p1;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	p1.m_A = &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	p1.m_B = &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	Person p2;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	p2.m_A = &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	p2.m_B = &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//Person p3 = p1.operator+(p2);//成员函数重载本质调用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//Person p3 = operatoe+(p1,p2);//全局函数重载本质调用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	Person p3 = p1 + p2;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//运算符重载也可以发生函数重载&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	Person p4 = p1 + &lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	cout &amp;lt;&amp;lt; &lt;span class=&quot;string&quot;&gt;&amp;quot;p3.m_A = &amp;quot;&lt;/span&gt; &amp;lt;&amp;lt; p3.m_A &amp;lt;&amp;lt; endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	cout &amp;lt;&amp;lt; &lt;span class=&quot;string&quot;&gt;&amp;quot;p3.m_B = &amp;quot;&lt;/span&gt; &amp;lt;&amp;lt; p3.m_B &amp;lt;&amp;lt; endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	cout &amp;lt;&amp;lt; &lt;span class=&quot;string&quot;&gt;&amp;quot;p4.m_A = &amp;quot;&lt;/span&gt; &amp;lt;&amp;lt; p4.m_A &amp;lt;&amp;lt; endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	cout &amp;lt;&amp;lt; &lt;span class=&quot;string&quot;&gt;&amp;quot;p4.m_B = &amp;quot;&lt;/span&gt; &amp;lt;&amp;lt; p4.m_B &amp;lt;&amp;lt; endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//主函数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;type&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;built_in&quot;&gt;test01&lt;/span&gt;();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;built_in&quot;&gt;system&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&amp;quot;pause&amp;quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    
+    <category term="C++" scheme="https://wwww.crisp077.xyz/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++核心编程——4 类和对象- 4.4 友元</title>
+    <link href="https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%944-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1-4-4-%E5%8F%8B%E5%85%83/"/>
+    <id>https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%944-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1-4-4-%E5%8F%8B%E5%85%83/</id>
+    <published>2022-06-06T15:01:05.000Z</published>
+    <updated>2022-06-06T15:01:43.609Z</updated>
+    
+    
+    <summary type="html">&lt;h5 id=&quot;4-4-友元&quot;&gt;&lt;a href=&quot;#4-4-友元&quot; class=&quot;headerlink&quot; title=&quot;4.4 友元&quot;&gt;&lt;/a&gt;4.4 友元&lt;/h5&gt;&lt;pre&gt;&lt;code&gt;在程序里，有些私有属性 也想让类外一些函数或者类进行访问，就需要用到友元的技术
+
+
+
+友元的目的就是让一个函数或者类 访问另一个类中私有成员
+
+友元的关键字为 `friend`
+
+友元的三种实现 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;全局函数做友元&lt;/li&gt;
+&lt;li&gt;类做友元&lt;/li&gt;
+&lt;li&gt;成员函数做友元&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    
+    <category term="C++" scheme="https://wwww.crisp077.xyz/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++核心编程——4 类和对象- 4.3 C++对象模型和this指针</title>
+    <link href="https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%944-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1-4-3-C-%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B%E5%92%8Cthis%E6%8C%87%E9%92%88/"/>
+    <id>https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%944-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1-4-3-C-%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B%E5%92%8Cthis%E6%8C%87%E9%92%88/</id>
+    <published>2022-06-06T14:59:57.000Z</published>
+    <updated>2022-06-06T15:00:38.756Z</updated>
+    
+    
+    <summary type="html">&lt;h5 id=&quot;4-3-C-对象模型和this指针&quot;&gt;&lt;a href=&quot;#4-3-C-对象模型和this指针&quot; class=&quot;headerlink&quot; title=&quot;4.3 C++对象模型和this指针&quot;&gt;&lt;/a&gt;4.3 C++对象模型和this指针&lt;/h5&gt;&lt;h6 id=&quot;4-3-1-成员变量和成员函数分开储存&quot;&gt;&lt;a href=&quot;#4-3-1-成员变量和成员函数分开储存&quot; class=&quot;headerlink&quot; title=&quot;4.3.1 成员变量和成员函数分开储存&quot;&gt;&lt;/a&gt;4.3.1 成员变量和成员函数分开储存&lt;/h6&gt;&lt;pre&gt;&lt;code&gt;在C++中，类内的成员变量和成员函数分开储存
+
+只有非静态成员变量才属于类的对象上
+&lt;/code&gt;&lt;/pre&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//成员变量和成员函数分开储存&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title class_&quot;&gt;Person01&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title class_&quot;&gt;Person02&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;type&quot;&gt;int&lt;/span&gt; p_A;&lt;span class=&quot;comment&quot;&gt;//非静态成员变量 属于类的对象&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;type&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;int&lt;/span&gt; p_B;&lt;span class=&quot;comment&quot;&gt;//静态成员变量 不属于类的对象上&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;type&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&amp;#125;&lt;span class=&quot;comment&quot;&gt;//非静态成员函数 不属于类的对象上&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;type&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;func2&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&amp;#125;&lt;span class=&quot;comment&quot;&gt;//静态成员函数 不属于类的对象上&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;type&quot;&gt;int&lt;/span&gt; Person02::p_B;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;type&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;test01&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	Person01 p1;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//空对象占用内存空间为：1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//C++编译器会给每个空对象也分配一个字节空间，是为了区分空对象占内存的位置&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//每个空对象也应该有一个独一无二的内存地址&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	cout &amp;lt;&amp;lt; &lt;span class=&quot;string&quot;&gt;&amp;quot;size of p1 = &amp;quot;&lt;/span&gt; &amp;lt;&amp;lt; &lt;span class=&quot;built_in&quot;&gt;sizeof&lt;/span&gt;(p1) &amp;lt;&amp;lt; endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;type&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;test02&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	Person02 p2;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	cout &amp;lt;&amp;lt; &lt;span class=&quot;string&quot;&gt;&amp;quot;size of p2 = &amp;quot;&lt;/span&gt; &amp;lt;&amp;lt; &lt;span class=&quot;built_in&quot;&gt;sizeof&lt;/span&gt;(p2) &amp;lt;&amp;lt; endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//主函数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;type&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;built_in&quot;&gt;test01&lt;/span&gt;();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;built_in&quot;&gt;test02&lt;/span&gt;();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;built_in&quot;&gt;system&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&amp;quot;pause&amp;quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    
+    <category term="C++" scheme="https://wwww.crisp077.xyz/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++核心编程——4 类和对象- 4.2 对象的初始化和清理</title>
+    <link href="https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%944-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1-4-2-%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E6%B8%85%E7%90%86/"/>
+    <id>https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%944-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1-4-2-%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E6%B8%85%E7%90%86/</id>
+    <published>2022-06-06T14:56:29.000Z</published>
+    <updated>2022-06-06T14:59:35.590Z</updated>
+    
+    
+    <summary type="html">&lt;h5 id=&quot;4-2-对象的初始化和清理&quot;&gt;&lt;a href=&quot;#4-2-对象的初始化和清理&quot; class=&quot;headerlink&quot; title=&quot;4.2 对象的初始化和清理&quot;&gt;&lt;/a&gt;4.2 对象的初始化和清理&lt;/h5&gt;&lt;ul&gt;
+&lt;li&gt;生活中我们买的电子产品都基本会有出厂设置，在某一天我们不用的时候也会删除一些自己信息数据保证安全&lt;/li&gt;
+&lt;li&gt;C++的面向对象中来源于生活，每个对象也都会有初始设置以及对象销毁前的清理数据的设置&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6 id=&quot;4-2-1-构造函数和析构函数&quot;&gt;&lt;a href=&quot;#4-2-1-构造函数和析构函数&quot; class=&quot;headerlink&quot; title=&quot;4.2.1 构造函数和析构函数&quot;&gt;&lt;/a&gt;4.2.1 构造函数和析构函数&lt;/h6&gt;&lt;pre&gt;&lt;code&gt;对象的**初始化和清理**也是两个非常重要的安全问题
+
+    一个对象或者变量没有初始状态，对其使用后果是未知
+
+    同样的使用完一个对象或变量，没有及时清理，也会造成一定的安全问题
+
+
+
+C++利用了**构造函数**和**析构函数**解决上述问题，这两个函数将会被编译器自动调用，完成对象的初始化和清理。
+
+对象的初始化和清理工作是编译器强制要我们做的事情，因此如果**我们不提供构造和析构，编译器会提供编译器提供的构造函数和析构函数，但其是空实现。**
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;构造函数：主要作用在于创建对象时为对象的成员属性赋值，构造函数有编译器自动调用，无需手动调用&lt;/li&gt;
+&lt;li&gt;析构函数：主要作用在于对象&lt;strong&gt;销毁前&lt;/strong&gt;系统自动调用，执行一些清理工作&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    
+    <category term="C++" scheme="https://wwww.crisp077.xyz/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++核心编程——4 类和对象- 4.1 封装</title>
+    <link href="https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%944-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1-4-1-%E5%B0%81%E8%A3%85/"/>
+    <id>https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%944-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1-4-1-%E5%B0%81%E8%A3%85/</id>
+    <published>2022-06-06T14:55:42.000Z</published>
+    <updated>2022-06-06T14:56:06.398Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html"></summary>
+        
+      
+    
+    
+    
+    
+    <category term="C++" scheme="https://wwww.crisp077.xyz/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++核心编程——3 函数提高</title>
+    <link href="https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%943-%E5%87%BD%E6%95%B0%E6%8F%90%E9%AB%98/"/>
+    <id>https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%943-%E5%87%BD%E6%95%B0%E6%8F%90%E9%AB%98/</id>
+    <published>2022-06-06T14:54:10.000Z</published>
+    <updated>2022-06-06T14:55:09.306Z</updated>
+    
+    
+    <summary type="html">&lt;h5 id=&quot;3-1-函数默认参数&quot;&gt;&lt;a href=&quot;#3-1-函数默认参数&quot; class=&quot;headerlink&quot; title=&quot;3.1 函数默认参数&quot;&gt;&lt;/a&gt;3.1 函数默认参数&lt;/h5&gt;&lt;pre&gt;&lt;code&gt;在C++中，函数的形参列表中的形参是可以有默认值的
+
+语法：`返回值类型 函数名 （参数 = 默认值）&amp;#123;&amp;#125;`
+&lt;/code&gt;&lt;/pre&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//函数默认参数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//如果我们传入数据，就用自己的数据，否则就用默认值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;type&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;type&quot;&gt;int&lt;/span&gt; a, &lt;span class=&quot;type&quot;&gt;int&lt;/span&gt; b = &lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;, &lt;span class=&quot;type&quot;&gt;int&lt;/span&gt; c = &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; a + b + c;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//注意！：&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//1、如果某个位置已经有了默认参数，那么从这个位置以后都要有默认参数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//int func1(int a = 10, int b, int c)//错误：a后面的b、c没有默认参数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//&amp;#123;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//	return a + b = c;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 2、如果函数声明有默认参数，函数实现就不能有默认参数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 声明和实现只能有一个默认参数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//int func2(int a = 10,int b =10)//函数声明有默认参数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//int func2(int a = 20,int b =20)//错误：函数实现也有了默认参数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//&amp;#123;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//	return a + b;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//主函数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;type&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;type&quot;&gt;int&lt;/span&gt; a = &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	cout &amp;lt;&amp;lt; &lt;span class=&quot;built_in&quot;&gt;func&lt;/span&gt;(a,&lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;) &amp;lt;&amp;lt; endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    
+    <category term="C++" scheme="https://wwww.crisp077.xyz/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++核心编程——2 引用</title>
+    <link href="https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%942-%E5%BC%95%E7%94%A8/"/>
+    <id>https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%942-%E5%BC%95%E7%94%A8/</id>
+    <published>2022-06-06T14:52:57.000Z</published>
+    <updated>2022-06-06T14:53:40.893Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html"></summary>
+        
+      
+    
+    
+    
+    
+    <category term="C++" scheme="https://wwww.crisp077.xyz/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++核心编程——1 内存分区模型</title>
+    <link href="https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%941-%E5%86%85%E5%AD%98%E5%88%86%E5%8C%BA%E6%A8%A1%E5%9E%8B/"/>
+    <id>https://wwww.crisp077.xyz/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%941-%E5%86%85%E5%AD%98%E5%88%86%E5%8C%BA%E6%A8%A1%E5%9E%8B/</id>
+    <published>2022-06-06T14:50:50.000Z</published>
+    <updated>2022-06-06T14:52:15.710Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;C++程序在执行时，将内存大方向划分为&lt;strong&gt;4个区域&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;代码区：&lt;/strong&gt;存放函数体的二进制代码，由操作系统进行管理&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;全局区：&lt;/strong&gt;存放全局变量和静态变量以及常量&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;栈区：&lt;/strong&gt;由编译器自动分配释放，存放函数的参数值，局部变量等&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;堆区：&lt;/strong&gt;由程序员分配和释放，若程序员不释放，程序结束时由操作系统回收&lt;/p&gt;
+&lt;p&gt;  &lt;strong&gt;内存四区存在的意义：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  不同区域存放的数据，赋予不同的生命周期，给我们更大的灵活编程
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    
+    <category term="C++" scheme="https://wwww.crisp077.xyz/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++结构体小结</title>
+    <link href="https://wwww.crisp077.xyz/2022/06/01/C++%E7%BB%93%E6%9E%84%E4%BD%93%E5%B0%8F%E7%BB%93/"/>
+    <id>https://wwww.crisp077.xyz/2022/06/01/C++%E7%BB%93%E6%9E%84%E4%BD%93%E5%B0%8F%E7%BB%93/</id>
+    <published>2022-06-01T13:42:40.000Z</published>
+    <updated>2022-06-06T14:47:50.925Z</updated>
+    
+    
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;​	结构体属于用户&lt;strong&gt;自定义的数据类型&lt;/strong&gt;，允许用户存储不同的数据类型&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;1.结构体的定义和使用&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	&lt;strong&gt;语法：&lt;/strong&gt;&lt;code&gt;struct 结构体名 &amp;#123; 结构体成员列表 &amp;#125;;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;​	通过结构体创建变量的方式有三种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;​	struct 结构体名 变量名&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;​	struct 结构体名 变量名 &amp;#x3D; { 成员1值 , 成员2值…}&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;​	定义结构体时顺便创建变量&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//创建一个学生结构体&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;title class_&quot;&gt;Student&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	string name;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;type&quot;&gt;int&lt;/span&gt; age;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;type&quot;&gt;float&lt;/span&gt; score;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;s3;&lt;span class=&quot;comment&quot;&gt;//方式3：定义结构体时顺便创建变量&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//主函数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;type&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;title class_&quot;&gt;Student&lt;/span&gt; s1;&lt;span class=&quot;comment&quot;&gt;//方式1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	s1.name = &lt;span class=&quot;string&quot;&gt;&amp;quot;张三&amp;quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	s1.age = &lt;span class=&quot;number&quot;&gt;18&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	s1.score = &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;title class_&quot;&gt;Student&lt;/span&gt; s2 = &amp;#123; &lt;span class=&quot;string&quot;&gt;&amp;quot;李四&amp;quot;&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;99.5&lt;/span&gt; &amp;#125;;&lt;span class=&quot;comment&quot;&gt;//方式2&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	s3.name = &lt;span class=&quot;string&quot;&gt;&amp;quot;王五&amp;quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	s3.age = &lt;span class=&quot;number&quot;&gt;17&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	s3.score = &lt;span class=&quot;number&quot;&gt;59.4&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	cout &amp;lt;&amp;lt; &lt;span class=&quot;string&quot;&gt;&amp;quot; s1姓名：&amp;quot;&lt;/span&gt; &amp;lt;&amp;lt; s1.name &amp;lt;&amp;lt; &lt;span class=&quot;string&quot;&gt;&amp;quot; s1年龄：&amp;quot;&lt;/span&gt; &amp;lt;&amp;lt; s1.age &amp;lt;&amp;lt; &lt;span class=&quot;string&quot;&gt;&amp;quot; s1成绩：&amp;quot;&lt;/span&gt; &amp;lt;&amp;lt; s1.score &amp;lt;&amp;lt; endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	cout &amp;lt;&amp;lt; &lt;span class=&quot;string&quot;&gt;&amp;quot; s2姓名：&amp;quot;&lt;/span&gt; &amp;lt;&amp;lt; s2.name &amp;lt;&amp;lt; &lt;span class=&quot;string&quot;&gt;&amp;quot; s2年龄：&amp;quot;&lt;/span&gt; &amp;lt;&amp;lt; s2.age &amp;lt;&amp;lt; &lt;span class=&quot;string&quot;&gt;&amp;quot; s2成绩：&amp;quot;&lt;/span&gt; &amp;lt;&amp;lt; s2.score &amp;lt;&amp;lt; endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	cout &amp;lt;&amp;lt; &lt;span class=&quot;string&quot;&gt;&amp;quot; s3姓名：&amp;quot;&lt;/span&gt; &amp;lt;&amp;lt; s3.name &amp;lt;&amp;lt; &lt;span class=&quot;string&quot;&gt;&amp;quot; s3年龄：&amp;quot;&lt;/span&gt; &amp;lt;&amp;lt; s3.age &amp;lt;&amp;lt; &lt;span class=&quot;string&quot;&gt;&amp;quot; s3成绩：&amp;quot;&lt;/span&gt; &amp;lt;&amp;lt; s3.score &amp;lt;&amp;lt; endl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//注意：输出String类型时，必须在程序头加上`#include &amp;lt;string&amp;gt;`&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;​	&lt;strong&gt;注意：&lt;/strong&gt;&lt;code&gt;struct&lt;/code&gt;关键字在初始化时也可省略&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="C++" scheme="https://wwww.crisp077.xyz/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++指针小结</title>
+    <link href="https://wwww.crisp077.xyz/2022/06/01/C++%E6%8C%87%E9%92%88%E5%B0%8F%E7%BB%93/"/>
+    <id>https://wwww.crisp077.xyz/2022/06/01/C++%E6%8C%87%E9%92%88%E5%B0%8F%E7%BB%93/</id>
+    <published>2022-06-01T13:41:58.000Z</published>
+    <updated>2022-06-06T14:47:40.029Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;strong&gt;1.占用内存：&lt;/strong&gt;在32为操作系统下（即x86）指针占4个字节空间；在64位操作系统下指针占8个字节空间，不管是什么数据类型。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2.空指针：&lt;/strong&gt;指针变量指向内存中编号为0的空间；&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;type&quot;&gt;int&lt;/span&gt;* p = &lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cout &amp;lt;&amp;lt; *p &amp;lt;&amp;lt;endl;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;​	&lt;strong&gt;用途：&lt;/strong&gt;初始化指针变量&lt;/p&gt;
+&lt;p&gt;​	&lt;strong&gt;注意：&lt;/strong&gt;空指针的内存是不可以访问的；内存编号0~255为系统占用内存，不允许用户访问&lt;/p&gt;
+&lt;p&gt;**3.野指针:**指针变量指向非法内存空间&lt;/p&gt;
+&lt;p&gt;​	在程序中尽量避免出现野指针&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;type&quot;&gt;int&lt;/span&gt;* p = (&lt;span class=&quot;type&quot;&gt;int&lt;/span&gt;*)&lt;span class=&quot;number&quot;&gt;0x1100&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;strong&gt;总结：&lt;/strong&gt;空指针和野指针都不是我们申请的空间，因此不要访问&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4.&lt;code&gt;const&lt;/code&gt;修饰指针&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;const&lt;/code&gt;修饰指针    —&lt;strong&gt;常量指针：指针的指向可以修改，但是指针指向的值不可以改&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;type&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;int&lt;/span&gt;* p = &amp;amp;a; &lt;span class=&quot;comment&quot;&gt;//常量指针&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;*p = &lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;;           &lt;span class=&quot;comment&quot;&gt;//错误：指针指向的值不可以改&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p = &amp;amp;b;            &lt;span class=&quot;comment&quot;&gt;//正确：指针指向可以改&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;const&lt;/code&gt;修饰常量    —&lt;strong&gt;指针常量：指针的指向不可以改，指针指向的值可以改&lt;/strong&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="C++" scheme="https://wwww.crisp077.xyz/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git基础操作</title>
+    <link href="https://wwww.crisp077.xyz/2022/05/29/Git%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/"/>
+    <id>https://wwww.crisp077.xyz/2022/05/29/Git%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/</id>
+    <published>2022-05-29T14:32:30.000Z</published>
+    <updated>2022-06-06T14:47:29.951Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;Git简介&quot;&gt;&lt;a href=&quot;#Git简介&quot; class=&quot;headerlink&quot; title=&quot;Git简介&quot;&gt;&lt;/a&gt;Git简介&lt;/h1&gt;&lt;p&gt;Git是一款免费、开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。&lt;/p&gt;
+&lt;p&gt;Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。&lt;/p&gt;
+&lt;p&gt;官网地址为：&lt;a href=&quot;https://git-scm.com/&quot;&gt;https://git-scm.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;优点：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;适合分布式开发，强调个体；&lt;/p&gt;
+&lt;p&gt;公共服务器压力和数据量都不会太大；&lt;/p&gt;
+&lt;p&gt;速度快、灵活；&lt;/p&gt;
+&lt;p&gt;任意两个开发者之间可以很容易的解决冲突；&lt;/p&gt;
+&lt;p&gt;离线工作。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;缺点：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;代码保密性差，一旦开发者把整个库克隆下来就可以完全公开所有代码和版本信息；&lt;/p&gt;
+&lt;p&gt;权限控制不友好；如果需要对开发者限制各种权限的建议使用SVN。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://rco7kpoyg.hn-bkt.clouddn.com/flowchart.png&quot; alt=&quot;Git分布式控制总流程图&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;Git基础操作&quot;&gt;&lt;a href=&quot;#Git基础操作&quot; class=&quot;headerlink&quot; title=&quot;Git基础操作&quot;&gt;&lt;/a&gt;Git基础操作&lt;/h1&gt;&lt;h3 id=&quot;克隆远程仓库内容&quot;&gt;&lt;a href=&quot;#克隆远程仓库内容&quot; class=&quot;headerlink&quot; title=&quot;克隆远程仓库内容&quot;&gt;&lt;/a&gt;克隆远程仓库内容&lt;/h3&gt;&lt;p&gt;​	使用&lt;code&gt;git clone  &lt;/code&gt;命令可以远程克隆代码托管平台，以GitHub平台为例，打开一个项目，在绿色的&lt;code&gt;code&lt;/code&gt;处点击复制项目链接&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://rco7kpoyg.hn-bkt.clouddn.com/gitcode.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;在需要克隆的仓库点击鼠标右键打开&lt;code&gt;git bash&lt;/code&gt;，在git bash中输入&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;git clone https:&lt;span class=&quot;comment&quot;&gt;//github.com/crisp077/Git-test.git&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    <category term="后端" scheme="https://wwww.crisp077.xyz/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+    <category term="git" scheme="https://wwww.crisp077.xyz/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Markdown书写指南</title>
+    <link href="https://wwww.crisp077.xyz/2022/05/27/Markdown%E4%B9%A6%E5%86%99%E6%8C%87%E5%8D%97/"/>
+    <id>https://wwww.crisp077.xyz/2022/05/27/Markdown%E4%B9%A6%E5%86%99%E6%8C%87%E5%8D%97/</id>
+    <published>2022-05-27T10:10:57.000Z</published>
+    <updated>2022-05-29T14:32:51.255Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;Markdown基础语法&quot;&gt;&lt;a href=&quot;#Markdown基础语法&quot; class=&quot;headerlink&quot; title=&quot;Markdown基础语法&quot;&gt;&lt;/a&gt;Markdown基础语法&lt;/h1&gt;&lt;h2 id=&quot;Markdown标题&quot;&gt;&lt;a href=&quot;#Markdown标题&quot; class=&quot;headerlink&quot; title=&quot;Markdown标题&quot;&gt;&lt;/a&gt;Markdown标题&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;一级标题对应一个&lt;code&gt;#&lt;/code&gt;号；&lt;/li&gt;
+&lt;li&gt;二级标题对应两个&lt;code&gt;#&lt;/code&gt;号；&lt;/li&gt;
+&lt;li&gt;以此类推，一共六级标题.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;# 一级标题&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;## 二级标题&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;### 三级标题&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#### 四级标题&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;##### 五级标题&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;###### 六级标题&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;Markdown文本&quot;&gt;&lt;a href=&quot;#Markdown文本&quot; class=&quot;headerlink&quot; title=&quot;Markdown文本&quot;&gt;&lt;/a&gt;Markdown文本&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;斜体文本：可以在需要标注为斜体文本前及斜体文本结尾，输入一个星号 &lt;code&gt;*&lt;/code&gt; 或者一个下划线 &lt;code&gt;_&lt;/code&gt;；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;粗体文本：可以在需要标注为粗体文本前及粗体文本结尾，输入两个星号 &lt;code&gt;**&lt;/code&gt; 或者两个下划线 &lt;code&gt;_&lt;/code&gt;；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;粗斜体文本：可以在需要标注为粗斜体文本前及粗斜体文本结尾，输入三个星号 &lt;code&gt;***&lt;/code&gt; 或者三个下划线 &lt;code&gt;_&lt;/code&gt;；&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端" scheme="https://wwww.crisp077.xyz/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="书写语言" scheme="https://wwww.crisp077.xyz/tags/%E4%B9%A6%E5%86%99%E8%AF%AD%E8%A8%80/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="https://wwww.crisp077.xyz/2022/05/25/hello-world/"/>
+    <id>https://wwww.crisp077.xyz/2022/05/25/hello-world/</id>
+    <published>2022-05-25T02:25:56.901Z</published>
+    <updated>2022-05-25T02:25:56.902Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html"></summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+</feed>
