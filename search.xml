@@ -45,83 +45,6 @@
       </tags>
   </entry>
   <entry>
-    <title>C++核心编程——1 内存分区模型</title>
-    <url>/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%941-%E5%86%85%E5%AD%98%E5%88%86%E5%8C%BA%E6%A8%A1%E5%9E%8B/</url>
-    <content><![CDATA[<p>C++程序在执行时，将内存大方向划分为<strong>4个区域</strong></p>
-<ul>
-<li><p><strong>代码区：</strong>存放函数体的二进制代码，由操作系统进行管理</p>
-</li>
-<li><p><strong>全局区：</strong>存放全局变量和静态变量以及常量</p>
-</li>
-<li><p><strong>栈区：</strong>由编译器自动分配释放，存放函数的参数值，局部变量等</p>
-</li>
-<li><p><strong>堆区：</strong>由程序员分配和释放，若程序员不释放，程序结束时由操作系统回收</p>
-<p>  <strong>内存四区存在的意义：</strong></p>
-<pre><code>  不同区域存放的数据，赋予不同的生命周期，给我们更大的灵活编程
-</code></pre>
-</li>
-</ul>
-<span id="more"></span>
-
-<h5 id="1-1-程序运行前"><a href="#1-1-程序运行前" class="headerlink" title="1.1 程序运行前"></a>1.1 程序运行前</h5><pre><code>在程序编译后生成了`exe`可执行程序，**未执行该程序前**分为两个区域：
-
-**代码区：**
-
-    存放CPU执行的机器指令
-
-    代码区是**共享的**，共享的目的是对于频繁被执行的程序，只需要在内存中有一份代码即可
-
-    代码区是**只读的**，使其只读的原因是防止程序异外修改了它的指令
-
-**全局区：**
-
-    全局变量和静态变量存放在此
-
-    全局区还包含了常量区，字符串常量和其他常量也存放在此
-
-    **该区域的数据在程序结束后由操作系统释放**
-</code></pre>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> p_a = <span class="number">100</span>;</span><br><span class="line"><span class="type">int</span> p_b = <span class="number">200</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> c_p_a = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">static</span> <span class="type">int</span> s_a = <span class="number">1000</span>;</span><br><span class="line">	<span class="type">static</span> <span class="type">int</span> s_b = <span class="number">2000</span>;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line">	<span class="type">int</span> b = <span class="number">20</span>;</span><br><span class="line">	<span class="type">const</span> <span class="type">int</span> c_a = <span class="number">10</span>;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;局部变量a的地址：&quot;</span> &lt;&lt; (<span class="type">int</span>) &amp; a &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;局部变量b的地址：&quot;</span> &lt;&lt; (<span class="type">int</span>) &amp; b &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;全局变量p_a的地址：&quot;</span> &lt;&lt; (<span class="type">int</span>) &amp; p_a &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;全局变量p_b的地址：&quot;</span> &lt;&lt; (<span class="type">int</span>) &amp; p_b &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;静态变量s_a的地址：&quot;</span> &lt;&lt; (<span class="type">int</span>)&amp;s_a &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;静态变量s_b的地址：&quot;</span> &lt;&lt; (<span class="type">int</span>)&amp;s_b &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;字符串常量‘helloworld’的地址为：&quot;</span> &lt;&lt; (<span class="type">int</span>)&amp;<span class="string">&quot;helloworld&quot;</span> &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;const修饰的全局变量(全局常量)c_p_a的地址为：&quot;</span> &lt;&lt; (<span class="type">int</span>)&amp;c_p_a &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;const修饰的局部变量(局部常量)c_a的地址为：&quot;</span> &lt;&lt; (<span class="type">int</span>)&amp;c_a &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<pre><code>总结：
-</code></pre>
-<ul>
-<li>C++中在程序运行期前分为全局区和代码区</li>
-<li>代码区特点是共享和只读</li>
-<li>全局区中存放全局变量、静态变量、常量</li>
-<li>常量区中存放<code>const</code>修饰的全局变量和字符串常量</li>
-</ul>
-<h5 id="1-2-程序运行后"><a href="#1-2-程序运行后" class="headerlink" title="1.2 程序运行后"></a>1.2 程序运行后</h5><pre><code>**栈区：**
-
-    由编译器自动分配释放，存放函数的参数值，局部变量等
-
-    **注意事项：**不要返回局部变量的地址，栈区开辟的数据由编译器自动释放
-</code></pre>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span>* <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">10</span>;<span class="comment">//局部变量 存放在栈区，栈区的数据在函数执行完后自动释放</span></span><br><span class="line">	<span class="keyword">return</span> &amp;a;<span class="comment">//返回局部变量的地址</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span>* p = <span class="built_in">func</span>();</span><br><span class="line">	cout &lt;&lt; *p &lt;&lt; endl;<span class="comment">//第一次可以打印正确的数字，是因为编译器做了保留</span></span><br><span class="line">	cout &lt;&lt; *p &lt;&lt; endl;<span class="comment">//第二次这个数据就不再保留</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//注意：一般项目运行在x86上，注意此时的x86和x64区别</span></span><br></pre></td></tr></table></figure>
-
-<pre><code>**堆区：**
-
-    由程序员分配释放，若程序员不释放，程序结束时由操作系统回收
-
-    在C++中主要利用`new`在堆区中开辟内存
-</code></pre>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span>* <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//利用new关键字，可以将数据开辟至堆区</span></span><br><span class="line">	<span class="comment">//指针本质也是局部变量，放在栈上，指针保存的数据放在堆中</span></span><br><span class="line">	<span class="type">int</span>* p = <span class="keyword">new</span> <span class="built_in">int</span>(<span class="number">10</span>);</span><br><span class="line">	<span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span>* a = <span class="built_in">func</span>();</span><br><span class="line">	cout &lt;&lt; * a &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; * a &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="1-3-new操作符"><a href="#1-3-new操作符" class="headerlink" title="1.3 new操作符"></a>1.3 new操作符</h5><pre><code>C++中利用`new`操作符在堆区开辟数据
-
-堆区开辟的数据，由程序员手动开辟，手动释放，释放利用操作符`delete`
-
-语法：`new 数据类型`
-
-利用`new`创建的数据，会返回该数据对应的类型的指针
-</code></pre>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span>* <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//在堆中创建整型数据</span></span><br><span class="line">	<span class="comment">//new返回的是该数据类型的指针</span></span><br><span class="line">	<span class="type">int</span>* p = <span class="keyword">new</span> <span class="built_in">int</span>(<span class="number">10</span>);</span><br><span class="line">	<span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//利用new在堆区开辟数组</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span>* arr = <span class="keyword">new</span> <span class="type">int</span>[<span class="number">10</span>];</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		arr[i] = i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; arr[i] &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">delete</span>[] arr;<span class="comment">//释放数组时，delete后应加[]</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span>* a = <span class="built_in">func</span>();</span><br><span class="line">	cout &lt;&lt; *a &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; *a &lt;&lt; endl;</span><br><span class="line">	<span class="built_in">test01</span>();</span><br><span class="line">	<span class="comment">//delete释放内存</span></span><br><span class="line">	<span class="keyword">delete</span> a;</span><br><span class="line">	<span class="comment">//cout &lt;&lt; *a &lt;&lt; endl;//内存以释放，非法操作</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>C++核心编程——2 引用</title>
     <url>/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%942-%E5%BC%95%E7%94%A8/</url>
     <content><![CDATA[<h4 id="2-引用"><a href="#2-引用" class="headerlink" title="2 引用"></a>2 引用</h4><h5 id="2-1-引用的基本使用"><a href="#2-1-引用的基本使用" class="headerlink" title="2.1 引用的基本使用"></a>2.1 引用的基本使用</h5><pre><code>**作用：**给变量起别名
@@ -163,6 +86,50 @@
 在函数形参列表中，可以加 `const`修饰形参，防止形参改变实参
 </code></pre>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">(<span class="type">const</span> <span class="type">int</span>&amp; val)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//val = 100;//防止修改实参</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;val = &quot;</span> &lt;&lt; val &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//常量引用</span></span><br><span class="line">	<span class="comment">//修饰形参，防止误操作</span></span><br><span class="line">	<span class="comment">//int&amp; ref = 10;//错误：引用必须因一块合法的内存空间</span></span><br><span class="line">	<span class="type">const</span> <span class="type">int</span>&amp; ref = <span class="number">10</span>;</span><br><span class="line">	<span class="comment">//加上const之后 编译器将代码修改为 int temp = 10；int* ref = temp；</span></span><br><span class="line">	<span class="comment">//ref = 20；//错误：加入const之后变为只读，不可修改</span></span><br><span class="line">	<span class="type">int</span> a = <span class="number">20</span>;</span><br><span class="line">	<span class="built_in">show</span>(a);</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;a = &quot;</span> &lt;&lt; a &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++核心编程——3 函数提高</title>
+    <url>/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%943-%E5%87%BD%E6%95%B0%E6%8F%90%E9%AB%98/</url>
+    <content><![CDATA[<h5 id="3-1-函数默认参数"><a href="#3-1-函数默认参数" class="headerlink" title="3.1 函数默认参数"></a>3.1 函数默认参数</h5><pre><code>在C++中，函数的形参列表中的形参是可以有默认值的
+
+语法：`返回值类型 函数名 （参数 = 默认值）&#123;&#125;`
+</code></pre>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//函数默认参数</span></span><br><span class="line"><span class="comment">//如果我们传入数据，就用自己的数据，否则就用默认值</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">func</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b = <span class="number">20</span>, <span class="type">int</span> c = <span class="number">30</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b + c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//注意！：</span></span><br><span class="line"><span class="comment">//1、如果某个位置已经有了默认参数，那么从这个位置以后都要有默认参数</span></span><br><span class="line"><span class="comment">//int func1(int a = 10, int b, int c)//错误：a后面的b、c没有默认参数</span></span><br><span class="line"><span class="comment">//&#123;</span></span><br><span class="line"><span class="comment">//	return a + b = c;</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、如果函数声明有默认参数，函数实现就不能有默认参数</span></span><br><span class="line"><span class="comment">// 声明和实现只能有一个默认参数</span></span><br><span class="line"><span class="comment">//int func2(int a = 10,int b =10)//函数声明有默认参数</span></span><br><span class="line"><span class="comment">//int func2(int a = 20,int b =20)//错误：函数实现也有了默认参数</span></span><br><span class="line"><span class="comment">//&#123;</span></span><br><span class="line"><span class="comment">//	return a + b;</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line">	cout &lt;&lt; <span class="built_in">func</span>(a,<span class="number">30</span>) &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h5 id="3-2-函数占位参数"><a href="#3-2-函数占位参数" class="headerlink" title="3.2 函数占位参数"></a>3.2 函数占位参数</h5><pre><code>C++中函数的形参列表里可以有占位参数，用来做占位，调用函数时必须填补该位置
+
+**语法：**`返回值类型 函数名 （数据类型）&#123;&#125;`
+</code></pre>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//函数占位参数</span></span><br><span class="line"><span class="comment">//占位参数也可以有默认参数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;This is a function!&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line">	<span class="built_in">func</span>(a,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="3-3-函数重载"><a href="#3-3-函数重载" class="headerlink" title="3.3 函数重载"></a>3.3 函数重载</h5><h6 id="3-3-1-函数重载概述"><a href="#3-3-1-函数重载概述" class="headerlink" title="3.3.1 函数重载概述"></a>3.3.1 函数重载概述</h6><pre><code>**作用：**函数名可以相同，提高复用性
+
+**函数重载满足条件**
+</code></pre>
+<ul>
+<li><p>同一个作用域下</p>
+</li>
+<li><p>函数名称相同</p>
+</li>
+<li><p>函数参数<strong>类型不同</strong> 或者<strong>个数不同</strong> 或<strong>顺序不同</strong></p>
+<p>  <strong>注意：</strong>函数的返回值不可以作为函数重载的条件</p>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;函数func()的调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">int</span> a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;函数func(int a)的调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">int</span> a, <span class="type">double</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;函数func(int a,double b)的调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">double</span> a, <span class="type">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;函数func(int a,double b)的调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//函数的返回值不能作为函数重载的条件</span></span><br><span class="line"><span class="comment">//int func(double a, int b)</span></span><br><span class="line"><span class="comment">//&#123;</span></span><br><span class="line"><span class="comment">//	cout &lt;&lt; &quot;函数func(int a,double b)的调用&quot; &lt;&lt; endl;</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">func</span>();</span><br><span class="line">	<span class="built_in">func</span>(<span class="number">10</span>);</span><br><span class="line">	<span class="built_in">func</span>(<span class="number">10</span>, <span class="number">3.14</span>);</span><br><span class="line">	<span class="built_in">func</span>(<span class="number">3.14</span>, <span class="number">10</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="3-3-2-函数重载的注意事项"><a href="#3-3-2-函数重载的注意事项" class="headerlink" title="3.3.2 函数重载的注意事项"></a>3.3.2 函数重载的注意事项</h6><ul>
+<li>引用作为重载条件</li>
+<li>函数重载碰到函数默认参数</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//函数重载的注意事项</span></span><br><span class="line"><span class="comment">//1.引用作为重载条件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">int</span>&amp; a)</span><span class="comment">//int&amp; a = 10 不合法</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;这是func(int&amp; a)的调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">const</span> <span class="type">int</span>&amp; a)</span><span class="comment">//const int&amp; a = 10 合法</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;这是const func(int&amp; a)的调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//2.函数重载碰到函数默认参数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func2</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b = <span class="number">10</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;这是func2(int a, int b = 10)的调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func2</span><span class="params">(<span class="type">int</span> a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;这是func2(int a)的调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line">	<span class="built_in">func</span>(a);</span><br><span class="line">	<span class="built_in">func</span>(<span class="number">10</span>);</span><br><span class="line">	<span class="comment">//func2(a);//当函数重载碰到默认参数就会出现二义性，重载尽量不要写默认参数</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
         <tag>C++</tag>
@@ -234,44 +201,77 @@ C++认为**万事万物皆为对象**，对象上有其属性和行为
       </tags>
   </entry>
   <entry>
-    <title>C++核心编程——3 函数提高</title>
-    <url>/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%943-%E5%87%BD%E6%95%B0%E6%8F%90%E9%AB%98/</url>
-    <content><![CDATA[<h5 id="3-1-函数默认参数"><a href="#3-1-函数默认参数" class="headerlink" title="3.1 函数默认参数"></a>3.1 函数默认参数</h5><pre><code>在C++中，函数的形参列表中的形参是可以有默认值的
-
-语法：`返回值类型 函数名 （参数 = 默认值）&#123;&#125;`
+    <title>C++核心编程——1 内存分区模型</title>
+    <url>/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%941-%E5%86%85%E5%AD%98%E5%88%86%E5%8C%BA%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<p>C++程序在执行时，将内存大方向划分为<strong>4个区域</strong></p>
+<ul>
+<li><p><strong>代码区：</strong>存放函数体的二进制代码，由操作系统进行管理</p>
+</li>
+<li><p><strong>全局区：</strong>存放全局变量和静态变量以及常量</p>
+</li>
+<li><p><strong>栈区：</strong>由编译器自动分配释放，存放函数的参数值，局部变量等</p>
+</li>
+<li><p><strong>堆区：</strong>由程序员分配和释放，若程序员不释放，程序结束时由操作系统回收</p>
+<p>  <strong>内存四区存在的意义：</strong></p>
+<pre><code>  不同区域存放的数据，赋予不同的生命周期，给我们更大的灵活编程
 </code></pre>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//函数默认参数</span></span><br><span class="line"><span class="comment">//如果我们传入数据，就用自己的数据，否则就用默认值</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">func</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b = <span class="number">20</span>, <span class="type">int</span> c = <span class="number">30</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b + c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//注意！：</span></span><br><span class="line"><span class="comment">//1、如果某个位置已经有了默认参数，那么从这个位置以后都要有默认参数</span></span><br><span class="line"><span class="comment">//int func1(int a = 10, int b, int c)//错误：a后面的b、c没有默认参数</span></span><br><span class="line"><span class="comment">//&#123;</span></span><br><span class="line"><span class="comment">//	return a + b = c;</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、如果函数声明有默认参数，函数实现就不能有默认参数</span></span><br><span class="line"><span class="comment">// 声明和实现只能有一个默认参数</span></span><br><span class="line"><span class="comment">//int func2(int a = 10,int b =10)//函数声明有默认参数</span></span><br><span class="line"><span class="comment">//int func2(int a = 20,int b =20)//错误：函数实现也有了默认参数</span></span><br><span class="line"><span class="comment">//&#123;</span></span><br><span class="line"><span class="comment">//	return a + b;</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line">	cout &lt;&lt; <span class="built_in">func</span>(a,<span class="number">30</span>) &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+</li>
+</ul>
 <span id="more"></span>
 
-<h5 id="3-2-函数占位参数"><a href="#3-2-函数占位参数" class="headerlink" title="3.2 函数占位参数"></a>3.2 函数占位参数</h5><pre><code>C++中函数的形参列表里可以有占位参数，用来做占位，调用函数时必须填补该位置
+<h5 id="1-1-程序运行前"><a href="#1-1-程序运行前" class="headerlink" title="1.1 程序运行前"></a>1.1 程序运行前</h5><pre><code>在程序编译后生成了`exe`可执行程序，**未执行该程序前**分为两个区域：
 
-**语法：**`返回值类型 函数名 （数据类型）&#123;&#125;`
+**代码区：**
+
+    存放CPU执行的机器指令
+
+    代码区是**共享的**，共享的目的是对于频繁被执行的程序，只需要在内存中有一份代码即可
+
+    代码区是**只读的**，使其只读的原因是防止程序异外修改了它的指令
+
+**全局区：**
+
+    全局变量和静态变量存放在此
+
+    全局区还包含了常量区，字符串常量和其他常量也存放在此
+
+    **该区域的数据在程序结束后由操作系统释放**
 </code></pre>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//函数占位参数</span></span><br><span class="line"><span class="comment">//占位参数也可以有默认参数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;This is a function!&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line">	<span class="built_in">func</span>(a,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> p_a = <span class="number">100</span>;</span><br><span class="line"><span class="type">int</span> p_b = <span class="number">200</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> c_p_a = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">static</span> <span class="type">int</span> s_a = <span class="number">1000</span>;</span><br><span class="line">	<span class="type">static</span> <span class="type">int</span> s_b = <span class="number">2000</span>;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line">	<span class="type">int</span> b = <span class="number">20</span>;</span><br><span class="line">	<span class="type">const</span> <span class="type">int</span> c_a = <span class="number">10</span>;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;局部变量a的地址：&quot;</span> &lt;&lt; (<span class="type">int</span>) &amp; a &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;局部变量b的地址：&quot;</span> &lt;&lt; (<span class="type">int</span>) &amp; b &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;全局变量p_a的地址：&quot;</span> &lt;&lt; (<span class="type">int</span>) &amp; p_a &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;全局变量p_b的地址：&quot;</span> &lt;&lt; (<span class="type">int</span>) &amp; p_b &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;静态变量s_a的地址：&quot;</span> &lt;&lt; (<span class="type">int</span>)&amp;s_a &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;静态变量s_b的地址：&quot;</span> &lt;&lt; (<span class="type">int</span>)&amp;s_b &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;字符串常量‘helloworld’的地址为：&quot;</span> &lt;&lt; (<span class="type">int</span>)&amp;<span class="string">&quot;helloworld&quot;</span> &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;const修饰的全局变量(全局常量)c_p_a的地址为：&quot;</span> &lt;&lt; (<span class="type">int</span>)&amp;c_p_a &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;const修饰的局部变量(局部常量)c_a的地址为：&quot;</span> &lt;&lt; (<span class="type">int</span>)&amp;c_a &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-
-
-<h5 id="3-3-函数重载"><a href="#3-3-函数重载" class="headerlink" title="3.3 函数重载"></a>3.3 函数重载</h5><h6 id="3-3-1-函数重载概述"><a href="#3-3-1-函数重载概述" class="headerlink" title="3.3.1 函数重载概述"></a>3.3.1 函数重载概述</h6><pre><code>**作用：**函数名可以相同，提高复用性
-
-**函数重载满足条件**
+<pre><code>总结：
 </code></pre>
 <ul>
-<li><p>同一个作用域下</p>
-</li>
-<li><p>函数名称相同</p>
-</li>
-<li><p>函数参数<strong>类型不同</strong> 或者<strong>个数不同</strong> 或<strong>顺序不同</strong></p>
-<p>  <strong>注意：</strong>函数的返回值不可以作为函数重载的条件</p>
-</li>
+<li>C++中在程序运行期前分为全局区和代码区</li>
+<li>代码区特点是共享和只读</li>
+<li>全局区中存放全局变量、静态变量、常量</li>
+<li>常量区中存放<code>const</code>修饰的全局变量和字符串常量</li>
 </ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;函数func()的调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">int</span> a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;函数func(int a)的调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">int</span> a, <span class="type">double</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;函数func(int a,double b)的调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">double</span> a, <span class="type">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;函数func(int a,double b)的调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//函数的返回值不能作为函数重载的条件</span></span><br><span class="line"><span class="comment">//int func(double a, int b)</span></span><br><span class="line"><span class="comment">//&#123;</span></span><br><span class="line"><span class="comment">//	cout &lt;&lt; &quot;函数func(int a,double b)的调用&quot; &lt;&lt; endl;</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">func</span>();</span><br><span class="line">	<span class="built_in">func</span>(<span class="number">10</span>);</span><br><span class="line">	<span class="built_in">func</span>(<span class="number">10</span>, <span class="number">3.14</span>);</span><br><span class="line">	<span class="built_in">func</span>(<span class="number">3.14</span>, <span class="number">10</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="1-2-程序运行后"><a href="#1-2-程序运行后" class="headerlink" title="1.2 程序运行后"></a>1.2 程序运行后</h5><pre><code>**栈区：**
 
-<h6 id="3-3-2-函数重载的注意事项"><a href="#3-3-2-函数重载的注意事项" class="headerlink" title="3.3.2 函数重载的注意事项"></a>3.3.2 函数重载的注意事项</h6><ul>
-<li>引用作为重载条件</li>
-<li>函数重载碰到函数默认参数</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//函数重载的注意事项</span></span><br><span class="line"><span class="comment">//1.引用作为重载条件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">int</span>&amp; a)</span><span class="comment">//int&amp; a = 10 不合法</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;这是func(int&amp; a)的调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">const</span> <span class="type">int</span>&amp; a)</span><span class="comment">//const int&amp; a = 10 合法</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;这是const func(int&amp; a)的调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//2.函数重载碰到函数默认参数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func2</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b = <span class="number">10</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;这是func2(int a, int b = 10)的调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func2</span><span class="params">(<span class="type">int</span> a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;这是func2(int a)的调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line">	<span class="built_in">func</span>(a);</span><br><span class="line">	<span class="built_in">func</span>(<span class="number">10</span>);</span><br><span class="line">	<span class="comment">//func2(a);//当函数重载碰到默认参数就会出现二义性，重载尽量不要写默认参数</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    由编译器自动分配释放，存放函数的参数值，局部变量等
+
+    **注意事项：**不要返回局部变量的地址，栈区开辟的数据由编译器自动释放
+</code></pre>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span>* <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">10</span>;<span class="comment">//局部变量 存放在栈区，栈区的数据在函数执行完后自动释放</span></span><br><span class="line">	<span class="keyword">return</span> &amp;a;<span class="comment">//返回局部变量的地址</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span>* p = <span class="built_in">func</span>();</span><br><span class="line">	cout &lt;&lt; *p &lt;&lt; endl;<span class="comment">//第一次可以打印正确的数字，是因为编译器做了保留</span></span><br><span class="line">	cout &lt;&lt; *p &lt;&lt; endl;<span class="comment">//第二次这个数据就不再保留</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//注意：一般项目运行在x86上，注意此时的x86和x64区别</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>**堆区：**
+
+    由程序员分配释放，若程序员不释放，程序结束时由操作系统回收
+
+    在C++中主要利用`new`在堆区中开辟内存
+</code></pre>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span>* <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//利用new关键字，可以将数据开辟至堆区</span></span><br><span class="line">	<span class="comment">//指针本质也是局部变量，放在栈上，指针保存的数据放在堆中</span></span><br><span class="line">	<span class="type">int</span>* p = <span class="keyword">new</span> <span class="built_in">int</span>(<span class="number">10</span>);</span><br><span class="line">	<span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span>* a = <span class="built_in">func</span>();</span><br><span class="line">	cout &lt;&lt; * a &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; * a &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-3-new操作符"><a href="#1-3-new操作符" class="headerlink" title="1.3 new操作符"></a>1.3 new操作符</h5><pre><code>C++中利用`new`操作符在堆区开辟数据
+
+堆区开辟的数据，由程序员手动开辟，手动释放，释放利用操作符`delete`
+
+语法：`new 数据类型`
+
+利用`new`创建的数据，会返回该数据对应的类型的指针
+</code></pre>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span>* <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//在堆中创建整型数据</span></span><br><span class="line">	<span class="comment">//new返回的是该数据类型的指针</span></span><br><span class="line">	<span class="type">int</span>* p = <span class="keyword">new</span> <span class="built_in">int</span>(<span class="number">10</span>);</span><br><span class="line">	<span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//利用new在堆区开辟数组</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span>* arr = <span class="keyword">new</span> <span class="type">int</span>[<span class="number">10</span>];</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		arr[i] = i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; arr[i] &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">delete</span>[] arr;<span class="comment">//释放数组时，delete后应加[]</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span>* a = <span class="built_in">func</span>();</span><br><span class="line">	cout &lt;&lt; *a &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; *a &lt;&lt; endl;</span><br><span class="line">	<span class="built_in">test01</span>();</span><br><span class="line">	<span class="comment">//delete释放内存</span></span><br><span class="line">	<span class="keyword">delete</span> a;</span><br><span class="line">	<span class="comment">//cout &lt;&lt; *a &lt;&lt; endl;//内存以释放，非法操作</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
         <tag>C++</tag>
@@ -419,6 +419,116 @@ C++利用了**构造函数**和**析构函数**解决上述问题，这两个函
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//静态成员函数</span></span><br><span class="line"><span class="comment">//所有对象共享一个函数</span></span><br><span class="line"><span class="comment">//静态成员函数只能访问静态成员变量</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//静态成员函数</span></span><br><span class="line">	<span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="comment">//p_B = 100;//报错：静态成员函数不可以访问非静态成员变量，无法区分到底是那个对象的p_B</span></span><br><span class="line">		p_A = <span class="number">100</span>;<span class="comment">//静态成员变量可以访问静态成员变量</span></span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;static void func调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">static</span> <span class="type">int</span> p_A;<span class="comment">//静态成员变量</span></span><br><span class="line">	<span class="type">int</span> p_B;</span><br><span class="line">	<span class="comment">//静态成员函数也是有访问权限的</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">func2</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;static void func2调用&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">int</span> Person::p_A;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//1、通过对象访问</span></span><br><span class="line">	Person p;</span><br><span class="line">	p.<span class="built_in">func</span>();</span><br><span class="line">	<span class="comment">//2、通过类名访问</span></span><br><span class="line">	Person::<span class="built_in">func</span>();</span><br><span class="line">	<span class="comment">//Person::func2();//类外访问不到私有的静态成员函数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">test01</span>();</span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h5 id=""><a href="#" class="headerlink" title=""></a></h5>]]></content>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++核心编程——5 文件操作</title>
+    <url>/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%945-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h4 id="5-文件操作"><a href="#5-文件操作" class="headerlink" title="5 文件操作"></a>5 文件操作</h4><p>​	程序运行时产生的数据都属于临时数据，程序一旦运行结束都会被释放</p>
+<p>​	通过<strong>文件可以将数据持久化</strong></p>
+<p>​	C++中对文件操作需要包含头文件<code>&lt; fstream &gt;</code></p>
+<p>​	文件类型分为两种：</p>
+<ul>
+<li>文本文件：文件以文本的<strong>ASCII码</strong>形式储存在计算机中</li>
+<li>二进制文件：文件以文本的<strong>二进制形式</strong>存储在计算机就中，用户一般不能直接读懂他们</li>
+</ul>
+<p>​	</p>
+<p>​	操作文件的三大类：</p>
+<ul>
+<li><code>ofstream</code>：写操作</li>
+<li><code>ifstream</code>：读操作</li>
+<li><code>fstream </code>  ：读写操作</li>
+</ul>
+<span id="more"></span>
+
+<h5 id="5-1-文本文件"><a href="#5-1-文本文件" class="headerlink" title="5.1 文本文件"></a>5.1 文本文件</h5><h6 id="5-1-1-写文件"><a href="#5-1-1-写文件" class="headerlink" title="5.1.1 写文件"></a>5.1.1 写文件</h6><p>​	写文件步骤如下：<br>​	1、包含头文件</p>
+<p>​		<code>#include &lt;fstream&gt;</code></p>
+<p>​	2、创建流对象</p>
+<p>​		<code>ofstream ofs;</code></p>
+<p>​	3、打开文件</p>
+<p>​		<code>ofs.open(&quot;文件路径&quot;,打开方式);</code></p>
+<p>​	4、写数据</p>
+<p>​		<code>ofs &lt;&lt; &quot;写入的数据&quot;;</code></p>
+<p>​	5、关闭文件</p>
+<p>​		<code>ofs.close();</code></p>
+<p>文件打开方式：</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>打开方式</strong></th>
+<th><strong>解释</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>ios::in</code></td>
+<td>为读文件而打开文件</td>
+</tr>
+<tr>
+<td align="left"><code>ios::out</code></td>
+<td>为写文件而打开文件</td>
+</tr>
+<tr>
+<td align="left"><code>ios::ate</code></td>
+<td>初始位置：文件尾</td>
+</tr>
+<tr>
+<td align="left"><code>ios::app</code></td>
+<td>追加方式写文件</td>
+</tr>
+<tr>
+<td align="left"><code>ios::trunc</code></td>
+<td>如果文件存在，先删除，再创建</td>
+</tr>
+<tr>
+<td align="left"><code>ios::binary</code></td>
+<td>二进制方式</td>
+</tr>
+</tbody></table>
+<p><strong>注意：</strong>文件打开方式可以配合使用，利用<code>|</code>操作符</p>
+<p><strong>例如：</strong>用二进制方式写文件<code>ios::binary | ios::out</code></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">//文本文件 写文件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//1、包含头文件 fstream</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//2、创建流对象</span></span><br><span class="line">	ofstream ofs;</span><br><span class="line">	<span class="comment">//3、指定打开方式</span></span><br><span class="line">	ofs.<span class="built_in">open</span>(<span class="string">&quot;test.txt&quot;</span>, ios::out);</span><br><span class="line">	<span class="comment">//4、写内容</span></span><br><span class="line">	ofs &lt;&lt; <span class="string">&quot;姓名：张三&quot;</span> &lt;&lt; endl;</span><br><span class="line">	ofs &lt;&lt; <span class="string">&quot;性别：男&quot;</span> &lt;&lt; endl;</span><br><span class="line">	ofs &lt;&lt; <span class="string">&quot;年龄：18&quot;</span> &lt;&lt; endl;</span><br><span class="line">	<span class="comment">//5、关闭文件</span></span><br><span class="line">	ofs.<span class="built_in">close</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">test01</span>();</span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>总结：</p>
+<ul>
+<li>文件操作必须包含头文件<code>fstream</code></li>
+<li>读文件可以利用<code>ofstream</code>或者<code>fstream</code></li>
+<li>打开文件时需要指定操作文件的路径，以及打开方式</li>
+<li>利用<code>&lt;&lt;</code>可以向文件中写数据</li>
+<li>操作完毕，要关闭文件</li>
+</ul>
+<h6 id="5-1-2-读文件"><a href="#5-1-2-读文件" class="headerlink" title="5.1.2 读文件"></a>5.1.2 读文件</h6><p>​	读文件与写文件步骤相似，但是读取方式比较多</p>
+<p>​	读文件步骤如下：</p>
+<p>​		1、包含头文件</p>
+<p>​			<code>#include &lt;fstream&gt;</code></p>
+<p>​		2、创建流对象</p>
+<p>​			<code>ifstream ifs;</code></p>
+<p>​		3、打开文件并判断文件是否成功打开</p>
+<p>​			<code>ifs.open(&quot;文件路径&quot;,打开方式);</code></p>
+<p>​		4、读数据</p>
+<p>​			四种方式读取</p>
+<p>​		5、关闭文件</p>
+<p>​			<code>ifs.close();</code></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">//文本文件 读文件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ifstream ifs;</span><br><span class="line">	ifs.<span class="built_in">open</span>(<span class="string">&quot;test.txt&quot;</span>, ios::in);</span><br><span class="line">	<span class="keyword">if</span> (!ifs.<span class="built_in">is_open</span>())</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;文件打开失败&quot;</span> &lt;&lt; endl;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//4、读数据</span></span><br><span class="line">	<span class="comment">//第一种</span></span><br><span class="line">	<span class="type">char</span> buf1[<span class="number">1024</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="keyword">while</span> (ifs &gt;&gt; buf1)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; buf1 &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;*&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	ifs.<span class="built_in">close</span>();</span><br><span class="line">	<span class="comment">//第二种</span></span><br><span class="line">	ifs.<span class="built_in">open</span>(<span class="string">&quot;test.txt&quot;</span>, ios::in);</span><br><span class="line">	<span class="type">char</span> buf2[<span class="number">1024</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="keyword">while</span> (ifs.<span class="built_in">getline</span>(buf2, <span class="built_in">sizeof</span>(buf2)))</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; buf2 &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;!&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	ifs.<span class="built_in">close</span>();</span><br><span class="line">	<span class="comment">//第三种</span></span><br><span class="line">	ifs.<span class="built_in">open</span>(<span class="string">&quot;test.txt&quot;</span>, ios::in);</span><br><span class="line">	string buf3;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">getline</span>(ifs, buf3))</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; buf3 &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	ifs.<span class="built_in">close</span>();</span><br><span class="line">	<span class="comment">//第四种</span></span><br><span class="line">	ifs.<span class="built_in">open</span>(<span class="string">&quot;test.txt&quot;</span>, ios::in);</span><br><span class="line">	<span class="type">char</span> c;</span><br><span class="line">	<span class="keyword">while</span> ((c = ifs.<span class="built_in">get</span>()) != EOF)<span class="comment">//EOF: end of file</span></span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; c;</span><br><span class="line">	&#125;</span><br><span class="line">	ifs.<span class="built_in">close</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">test01</span>();</span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="5-2-二进制文件"><a href="#5-2-二进制文件" class="headerlink" title="5.2 二进制文件"></a>5.2 二进制文件</h5><p>​	以二进制的方式对文件进行读写操作</p>
+<p>​	打开方式为<code>ios::binary</code></p>
+<h6 id="5-2-1-写文件"><a href="#5-2-1-写文件" class="headerlink" title="5.2.1 写文件"></a>5.2.1 写文件</h6><p>​	二进制方式写文件主要利用流对象调用成员函数<code>write</code></p>
+<p>​	函数原型：<code>ostream&amp; write(const char* buffer,int len);</code></p>
+<p>​	参数解释：字符指针<code>buffer</code>指向内存中一段存储空间。<code>len</code>是读写的字节数</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">//二进制文件 写文件</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="type">char</span> m_Name[<span class="number">64</span>];</span><br><span class="line">	<span class="type">int</span> m_Age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ofstream ofs;</span><br><span class="line">	ofs.<span class="built_in">open</span>(<span class="string">&quot;person.txt&quot;</span>, ios::binary | ios::out);</span><br><span class="line">	Person p = &#123; <span class="string">&quot;张三&quot;</span>,<span class="number">18</span> &#125;;</span><br><span class="line">	ofs.<span class="built_in">write</span>((<span class="type">const</span> <span class="type">char</span>*)&amp;p, <span class="built_in">sizeof</span>(Person));</span><br><span class="line">	ofs.<span class="built_in">close</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">test01</span>();</span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="5-2-2-读文件"><a href="#5-2-2-读文件" class="headerlink" title="5.2.2 读文件"></a>5.2.2 读文件</h6><p>​	二进制方式读文件主要利用流对象调用成员函数<code>read</code></p>
+<p>​	函数原型：<code>istream&amp; read(char* buffer,int len);</code></p>
+<p>​	参数解释：字符指针<code>buffer</code>指向内存中一段存储空间。<code>len</code>是读写的字节数</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">//二进制文件 读文件</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="type">char</span> m_Name[<span class="number">64</span>];</span><br><span class="line">	<span class="type">int</span> m_Age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ifstream ifs;</span><br><span class="line">	ifs.<span class="built_in">open</span>(<span class="string">&quot;person.txt&quot;</span>, ios::binary | ios::in);</span><br><span class="line">	<span class="keyword">if</span> (!ifs.<span class="built_in">is_open</span>())</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;文件打开失败&quot;</span> &lt;&lt; endl;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	Person p;</span><br><span class="line">	ifs.<span class="built_in">read</span>((<span class="type">char</span>*)&amp;p, <span class="built_in">sizeof</span>(Person));</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;姓名：&quot;</span> &lt;&lt; p.m_Name &lt;&lt; <span class="string">&quot; 年龄：&quot;</span> &lt;&lt; p.m_Age &lt;&lt; endl;</span><br><span class="line">	ifs.<span class="built_in">close</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">test01</span>();</span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
       <tags>
         <tag>C++</tag>
       </tags>
@@ -589,6 +699,270 @@ C++通过提供特殊对象指针，`this`指针，解决上述问题。
 ]]></content>
       <tags>
         <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++结构体小结</title>
+    <url>/2022/06/01/C++%E7%BB%93%E6%9E%84%E4%BD%93%E5%B0%8F%E7%BB%93/</url>
+    <content><![CDATA[<ul>
+<li>​	结构体属于用户<strong>自定义的数据类型</strong>，允许用户存储不同的数据类型</li>
+</ul>
+<p><strong>1.结构体的定义和使用</strong></p>
+<p>​	<strong>语法：</strong><code>struct 结构体名 &#123; 结构体成员列表 &#125;;</code></p>
+<p>​	通过结构体创建变量的方式有三种：</p>
+<ul>
+<li><p>​	struct 结构体名 变量名</p>
+</li>
+<li><p>​	struct 结构体名 变量名 &#x3D; { 成员1值 , 成员2值…}</p>
+</li>
+<li><p>​	定义结构体时顺便创建变量</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创建一个学生结构体</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Student</span></span><br><span class="line">&#123;</span><br><span class="line">	string name;</span><br><span class="line">	<span class="type">int</span> age;</span><br><span class="line">	<span class="type">float</span> score;</span><br><span class="line">&#125;s3;<span class="comment">//方式3：定义结构体时顺便创建变量</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">struct</span> <span class="title class_">Student</span> s1;<span class="comment">//方式1</span></span><br><span class="line">	s1.name = <span class="string">&quot;张三&quot;</span>;</span><br><span class="line">	s1.age = <span class="number">18</span>;</span><br><span class="line">	s1.score = <span class="number">100</span>;</span><br><span class="line">	<span class="keyword">struct</span> <span class="title class_">Student</span> s2 = &#123; <span class="string">&quot;李四&quot;</span>,<span class="number">20</span>,<span class="number">99.5</span> &#125;;<span class="comment">//方式2</span></span><br><span class="line">	s3.name = <span class="string">&quot;王五&quot;</span>;</span><br><span class="line">	s3.age = <span class="number">17</span>;</span><br><span class="line">	s3.score = <span class="number">59.4</span>;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; s1姓名：&quot;</span> &lt;&lt; s1.name &lt;&lt; <span class="string">&quot; s1年龄：&quot;</span> &lt;&lt; s1.age &lt;&lt; <span class="string">&quot; s1成绩：&quot;</span> &lt;&lt; s1.score &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; s2姓名：&quot;</span> &lt;&lt; s2.name &lt;&lt; <span class="string">&quot; s2年龄：&quot;</span> &lt;&lt; s2.age &lt;&lt; <span class="string">&quot; s2成绩：&quot;</span> &lt;&lt; s2.score &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; s3姓名：&quot;</span> &lt;&lt; s3.name &lt;&lt; <span class="string">&quot; s3年龄：&quot;</span> &lt;&lt; s3.age &lt;&lt; <span class="string">&quot; s3成绩：&quot;</span> &lt;&lt; s3.score &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//注意：输出String类型时，必须在程序头加上`#include &lt;string&gt;`</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>​	<strong>注意：</strong><code>struct</code>关键字在初始化时也可省略</p>
+<span id="more"></span>
+
+<p><strong>2.结构体数组</strong></p>
+<ul>
+<li><p><strong>作用：</strong>将自定义的结构体放入数组中方便维护</p>
+</li>
+<li><p><strong>语法：</strong><code>struct 结构体名 数组名[元素个数] = &#123; &#123;&#125;,&#123;&#125;,...,&#123;&#125;&#125;</code></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Student arr[<span class="number">3</span>] =</span><br><span class="line">	&#123;</span><br><span class="line">		&#123;<span class="string">&quot;张三&quot;</span>,<span class="number">20</span>,<span class="number">100</span>&#125;,</span><br><span class="line">		&#123;<span class="string">&quot;李四&quot;</span>,<span class="number">18</span>,<span class="number">99.5</span>&#125;,</span><br><span class="line">		&#123;<span class="string">&quot;王五&quot;</span>,<span class="number">17</span>,<span class="number">59.4</span>&#125;</span><br><span class="line">	&#125;;</span><br><span class="line">	arr[<span class="number">0</span>].name = <span class="string">&quot;赵六&quot;</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">sizeof</span>(arr) / <span class="built_in">sizeof</span>(arr[<span class="number">0</span>]); ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot; 姓名：&quot;</span> &lt;&lt; arr[i].name &lt;&lt; <span class="string">&quot; 年龄：&quot;</span> &lt;&lt; arr[i].age &lt;&lt; <span class="string">&quot; 成绩：&quot;</span> &lt;&lt; arr[i].score &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>3.结构体指针</strong></p>
+<p>​	<strong>作用：</strong>通过指针访问结构体中的成员</p>
+<ul>
+<li><p>利用操作符<code>-&gt;</code>可以通过结构体指针访问结构体属性</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Student s1 = &#123; <span class="string">&quot;张三&quot;</span>,<span class="number">20</span>,<span class="number">100</span> &#125;;</span><br><span class="line">	Student* p = &amp;s1;<span class="comment">//定义指针时也要用结构体定义!!!</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; 姓名：&quot;</span> &lt;&lt; p-&gt;name &lt;&lt; <span class="string">&quot; 年龄：&quot;</span> &lt;&lt; p-&gt;age &lt;&lt; <span class="string">&quot; 成绩：&quot;</span> &lt;&lt; p-&gt;score &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>4.结构体嵌套结构体</strong></p>
+<p>​	<strong>作用：</strong>结构体中的成员可以是另一个结构体</p>
+<p>​	<strong>例如：</strong>每个老师教1个学生，一个老师的结构体中，记录一个学生的结构体</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创建一个老师结构体</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Teacher</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> id;</span><br><span class="line">	string name;</span><br><span class="line">	Student stu;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Student s1 = &#123; <span class="string">&quot;张三&quot;</span>,<span class="number">20</span>,<span class="number">100</span> &#125;;</span><br><span class="line">	Teacher t1 = &#123; <span class="number">123456</span>,<span class="string">&quot;李老师&quot;</span>,s1 &#125;;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; 教职工编号：&quot;</span> &lt;&lt; t1.id &lt;&lt; <span class="string">&quot; 姓名：&quot;</span> &lt;&lt; t1.name &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; 所带学生姓名为：&quot;</span> &lt;&lt; t1.stu.name &lt;&lt; <span class="string">&quot; 年龄为：&quot;</span> &lt;&lt; t1.stu.age &lt;&lt; <span class="string">&quot; 成绩为：&quot;</span> &lt;&lt; t1.stu.score &lt;&lt;endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>5.结构体做函数参数</strong></p>
+<p>​	<strong>作用：</strong>将结构体作为参数向函数中传递</p>
+<p>​	传递方式有两种：</p>
+<ul>
+<li><p>值传递</p>
+</li>
+<li><p>地址传递</p>
+<p><strong>注意：</strong>地址传递与值传递对实参本身的影响</p>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//值传递</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">PrintStu1</span><span class="params">(<span class="keyword">struct</span> Student s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	s.name = <span class="string">&quot;李四&quot;</span>;<span class="comment">//修改值后注意控制台变化</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; 姓名：&quot;</span> &lt;&lt; s.name &lt;&lt; <span class="string">&quot; 年龄：&quot;</span> &lt;&lt; s.age &lt;&lt; <span class="string">&quot; s成绩：&quot;</span> &lt;&lt; s.score &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//地址传递</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">PrintStu2</span><span class="params">(<span class="keyword">struct</span> Student* p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	p-&gt;name = <span class="string">&quot;王五&quot;</span>;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; 姓名：&quot;</span> &lt;&lt; p-&gt;name &lt;&lt; <span class="string">&quot; 年龄：&quot;</span> &lt;&lt; p-&gt;age &lt;&lt; <span class="string">&quot; s成绩：&quot;</span> &lt;&lt; p-&gt;score &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Student s1 = &#123; <span class="string">&quot;张三&quot;</span>,<span class="number">20</span>,<span class="number">100</span> &#125;;</span><br><span class="line">	<span class="built_in">PrintStu1</span>(s1);</span><br><span class="line">	<span class="built_in">PrintStu2</span>(&amp;s1);</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; 姓名：&quot;</span> &lt;&lt; s1.name &lt;&lt; <span class="string">&quot; 年龄：&quot;</span> &lt;&lt; s1.age &lt;&lt; <span class="string">&quot; s成绩：&quot;</span> &lt;&lt; s1.score &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>6.结构体中<code>const</code>的使用场景</strong></p>
+<p>​	<strong>作用：</strong>用<code>const</code>防止误操作</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//将函数中的形参改为指针，可以减少内存使用，且不会复制新的副本出来</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">PrintStu</span><span class="params">(<span class="type">const</span> <span class="keyword">struct</span> Student* p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//p-&gt;name = &quot;王五&quot;;//操作失败，因为加入const</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; 姓名：&quot;</span> &lt;&lt; p-&gt;name &lt;&lt; <span class="string">&quot; 年龄：&quot;</span> &lt;&lt; p-&gt;age &lt;&lt; <span class="string">&quot; s成绩：&quot;</span> &lt;&lt; p-&gt;score &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Student s1 = &#123; <span class="string">&quot;张三&quot;</span>,<span class="number">20</span>,<span class="number">100</span> &#125;;</span><br><span class="line">	<span class="built_in">PrintStu</span>(&amp;s1);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2022/05/25/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Git基础操作</title>
+    <url>/2022/05/29/Git%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h1 id="Git简介"><a href="#Git简介" class="headerlink" title="Git简介"></a>Git简介</h1><p>Git是一款免费、开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。</p>
+<p>Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。</p>
+<p>官网地址为：<a href="https://git-scm.com/">https://git-scm.com/</a></p>
+<p><strong>优点：</strong></p>
+<p>适合分布式开发，强调个体；</p>
+<p>公共服务器压力和数据量都不会太大；</p>
+<p>速度快、灵活；</p>
+<p>任意两个开发者之间可以很容易的解决冲突；</p>
+<p>离线工作。</p>
+<p><strong>缺点：</strong></p>
+<p>代码保密性差，一旦开发者把整个库克隆下来就可以完全公开所有代码和版本信息；</p>
+<p>权限控制不友好；如果需要对开发者限制各种权限的建议使用SVN。</p>
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/flowchart.png" alt="Git分布式控制总流程图"></p>
+<h1 id="Git基础操作"><a href="#Git基础操作" class="headerlink" title="Git基础操作"></a>Git基础操作</h1><h3 id="克隆远程仓库内容"><a href="#克隆远程仓库内容" class="headerlink" title="克隆远程仓库内容"></a>克隆远程仓库内容</h3><p>​	使用<code>git clone  </code>命令可以远程克隆代码托管平台，以GitHub平台为例，打开一个项目，在绿色的<code>code</code>处点击复制项目链接</p>
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitcode.png"></p>
+<p>在需要克隆的仓库点击鼠标右键打开<code>git bash</code>，在git bash中输入</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git clone https:<span class="comment">//github.com/crisp077/Git-test.git</span></span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>克隆成功后出现如下字样</p>
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitclone.png"></p>
+<p>打开克隆好的项目</p>
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/happen1.png"></p>
+<p>我们可以发现一个GitHub项目就被克隆到了我们本地</p>
+<h3 id="拉取远程仓库内容"><a href="#拉取远程仓库内容" class="headerlink" title="拉取远程仓库内容"></a>拉取远程仓库内容</h3><p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/change1.png"></p>
+<p>​	在将项目克隆到本地文件后，如果项目更新，我们就可以利用<code>git pull </code>命令来同步远程仓库做出的改动</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git pull origin main</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitpull1.png"></p>
+<p>就可以在仓库中看到更新的内容</p>
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/happen2.png"></p>
+<p>​	<strong>注意：</strong>看现在仓库的主分支是<code>master</code>还是<code>main</code>，如果为master，则为<code>git pull origin master</code></p>
+<h3 id="更新远程仓库内容"><a href="#更新远程仓库内容" class="headerlink" title="更新远程仓库内容"></a>更新远程仓库内容</h3><p>​	如果我们在本地项目上进行更新，那么就需要利用<code>git push</code>命令将本地项目的更新同步到远程仓库，在执行<code>git push</code>完整命令之前，我们可以利用<code>git status</code>命令来查看更新了哪些内容</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitstatus.png"></p>
+<p>由于我们之前在本地更新的内容属于工作区（会在status中显示为红色），在<code>git push</code>到远程仓库之前需要利用<code>git add</code>命令将其移动至暂存区（在status中显示为绿色），如果添加单个命令入缓存区可以输入<code>git add 文件名</code>，为了便利可以直接输入<code>git add .</code>，即添加所有文件</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitadd.png"></p>
+<p>再次键入<code>git status</code>我们可以看到，本地新增的文件，其文件名由绿色变为红色，即从工作区成功移动到暂存区</p>
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitstatus2.png"></p>
+<p>在更新的文件存入暂存区后，还需要将其存入相对应的分支中，这是需要用的<code>git commit</code>命令，可以在commit后面键入对应的分支名，在分支名后可以添加本次更新内容的信息</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;hellogit文件添加&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>再次用<code>git status</code>查看状态，可以看到状态栏里面为空，说明上传成功</p>
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitcommit.png"></p>
+<p>​	<strong>注意：</strong>第一次安装Git后，commit可能会出现下面提示：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git config --global user.email <span class="string">&quot;you@example.com&quot;</span></span><br><span class="line">git config --global user.name <span class="string">&quot;your name&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这时按照提示重新输入这两行命令，将自己邮箱和昵称输入即可</p>
+<p>接下来就可以使用<code>git push</code>命令将更新内容上传至远程仓库</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git push origin main</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitpush.png"></p>
+<p>我们打开GitHub可以看到更新的内容，以及后面的更新说明</p>
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/hellogitshow.png"></p>
+<p>​	<strong>注意：</strong>在<code>git push</code>的过程中为了确保是本人对远程仓库的命令进行操作，一般会弹出弹窗让你输入远程仓库的密码，输入正确后就可以成功push；每次push都需要输入密码，显然很麻烦，我们可以通过<code>ssh-keygen -t rsa</code>来生成公钥，对远程仓库进行公钥配置，就可以实现免密推送。详情见<a href="https://blog.csdn.net/redrose2100/article/details/121668161">Github配置公钥</a>。</p>
+<h3 id="版本追溯"><a href="#版本追溯" class="headerlink" title="版本追溯"></a>版本追溯</h3><p>​	在项目开发中经常会遇到各种问题，例如最新版本出现BUG，需要将版本回溯到以前的版本进行重新开发，这时候我们可以使用<code>git reset --hard 版本号</code> 命令来进行版本追溯，我们首先查看版本</p>
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/reset1.png"></p>
+<p>然后进入</p>
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/reset2.png"></p>
+<p>复制想要追溯的版本号，然后在本地项目中输入</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git reset --hard <span class="number">2</span>a871662d42a220a26f555a24cd0864a30352270</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/reset3.png"></p>
+<p>就可以切换至要追溯的版本，想要切换至最新版本则可以键入<code>git reset --hard 最新版本号</code>。</p>
+<h3 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h3><p>​	在一个项目开发中，通常会有正式发布版和开发版，正式发布版一般存放在<code>main/master</code>主分支而开发版本则存放在其他分支。对于一个<code>git clone</code>后的项目，我们可以通过<code>git branch</code>来查看该项目下有几个分支</p>
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitbranch.png"></p>
+<p>可以看到，这个项目中只有一个分支，<code>main</code>即主分支。我们可以利用<code>git branch 分支名</code>来创建一个其他的分支例如创建一个<code>develop</code>分支</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git branch develop</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitbranch2.png"></p>
+<p>但是现在仍处于<code>main</code>分支，我们可以用<code>git checkout 分支名</code>切换到其他的分支</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git checkout develop</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitbranch3.png"></p>
+<p>可以看出已经切换至<code>develop</code>分支，然后在<code>develop</code>分支下新建一个文件<code>develop.txt</code></p>
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitbranch4.png"></p>
+<p>然后用<code>git add</code>和<code>git commit</code>的一系列操作，将文件放入暂存区，准备更新远程仓库</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;develop提交&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后用<code>git checkout main</code>切换至主分支（也可以直接在<code>develop</code>分支直接输入，为了避免文件存放错误，一般在其他分支更新完成文件后建议切换至主分支进行操作），利用<code>git push</code>更新远程仓库（注意书写变化）</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git push origin develop:develop</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/develop.png"></p>
+<p>点击<code>main</code>下面出现其他分支选项，点击切换至<code>develop</code>分支</p>
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/develop2.png"></p>
+<p>可以看到<code>develop</code> 分支下存在<code>develop.txt</code>文件</p>
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/develop3.png"></p>
+<p>当在<code>develop</code>或者其他分支的文件完全编写成功可以正式发布以后，我们就需要将<code>develop</code>或其他分支下的所做的更改应用到<code>main</code>分支上，这时候就需要用的<code>git merge</code>将<code>main</code>和<code>develop</code>进行合并，在<code>main</code>主分支中键入</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git merge develop</span><br><span class="line">git push origin main</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/develop4.png"></p>
+<p>进入主分支<code>main</code>，看可以看到有<code>develop.txt</code>文件的存在</p>
+<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/develop5.png"></p>
+<p>以上就是Git的基础的操作。</p>
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Markdown书写指南</title>
+    <url>/2022/05/27/Markdown%E4%B9%A6%E5%86%99%E6%8C%87%E5%8D%97/</url>
+    <content><![CDATA[<h1 id="Markdown基础语法"><a href="#Markdown基础语法" class="headerlink" title="Markdown基础语法"></a>Markdown基础语法</h1><h2 id="Markdown标题"><a href="#Markdown标题" class="headerlink" title="Markdown标题"></a>Markdown标题</h2><ul>
+<li>一级标题对应一个<code>#</code>号；</li>
+<li>二级标题对应两个<code>#</code>号；</li>
+<li>以此类推，一共六级标题.</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"># 一级标题</span><br><span class="line">## 二级标题</span><br><span class="line">### 三级标题</span><br><span class="line">#### 四级标题</span><br><span class="line">##### 五级标题</span><br><span class="line">###### 六级标题</span><br></pre></td></tr></table></figure>
+
+<h2 id="Markdown文本"><a href="#Markdown文本" class="headerlink" title="Markdown文本"></a>Markdown文本</h2><ul>
+<li><p>斜体文本：可以在需要标注为斜体文本前及斜体文本结尾，输入一个星号 <code>*</code> 或者一个下划线 <code>_</code>；</p>
+</li>
+<li><p>粗体文本：可以在需要标注为粗体文本前及粗体文本结尾，输入两个星号 <code>**</code> 或者两个下划线 <code>_</code>；</p>
+</li>
+<li><p>粗斜体文本：可以在需要标注为粗斜体文本前及粗斜体文本结尾，输入三个星号 <code>***</code> 或者三个下划线 <code>_</code>；</p>
+<span id="more"></span></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">*斜体文本*</span><br><span class="line">    </span><br><span class="line">_斜体文本_</span><br><span class="line"></span><br><span class="line">**粗体文本**</span><br><span class="line"></span><br><span class="line">__粗体文本__</span><br><span class="line"></span><br><span class="line">***粗斜体文本***</span><br><span class="line"></span><br><span class="line">___粗斜体文本___</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<h2 id="Markdown列表"><a href="#Markdown列表" class="headerlink" title="Markdown列表"></a>Markdown列表</h2><ul>
+<li>无序列表，使用星号(<code>*</code>)、加号(<code>+</code>)或是减号(<code>-</code>)，再加一个空格作为列表标记；</li>
+<li>有序列表，使用数字并加上 <code>.</code> 号，再加一个空格作为列表标记；</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">* 无序列表 <span class="number">1</span></span><br><span class="line">+ 无序列表 <span class="number">2</span></span><br><span class="line">- 无序列表 <span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> 有序列表 <span class="number">1</span></span><br><span class="line"><span class="number">2.</span> 有序列表 <span class="number">2</span></span><br><span class="line"><span class="number">3.</span> 有序列表 <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Markdown链接"><a href="#Markdown链接" class="headerlink" title="Markdown链接"></a>Markdown链接</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">[链接名称](链接地址)</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">&lt;链接地址&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Markdown引用"><a href="#Markdown引用" class="headerlink" title="Markdown引用"></a>Markdown引用</h2><p>引用的格式是在符号 <code>&gt;</code> 后面书写文字，或者加一个空格再加文字，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">&gt; 这是一个引用：</span><br><span class="line">&gt; 欢迎关注三月江东个人博客</span><br><span class="line">&gt;&gt; 这是一个二级嵌套</span><br><span class="line">&gt;&gt;&gt; 这是一个三级嵌套</span><br></pre></td></tr></table></figure>
+
+<h2 id="Markdown分割线"><a href="#Markdown分割线" class="headerlink" title="Markdown分割线"></a>Markdown分割线</h2><p>可以在一行中用三个 <code>-</code> 或者 <code>*</code> 来建立一个分隔线，同时需要在分隔线的上面空一行，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">欢迎关注博客</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">【三月江东】</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">***</span><br><span class="line">* * *</span><br><span class="line">*****</span><br><span class="line">- - - </span><br></pre></td></tr></table></figure>
+
+<h2 id="Markdown删除线"><a href="#Markdown删除线" class="headerlink" title="Markdown删除线"></a>Markdown删除线</h2><p>删除线的使用，在需要删除的文字前后各使用两个 <code>~</code>，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">~~这是要被删除的内容。~~</span><br></pre></td></tr></table></figure>
+
+<h2 id="Markdown下划线"><a href="#Markdown下划线" class="headerlink" title="Markdown下划线"></a>Markdown下划线</h2><p>下划线的使用，在需要添加下划线的文字首部和尾部加上 <code>&lt;u&gt;文本&lt;/u&gt;</code>，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">&lt;u&gt;这行文字已被添加下划线&lt;/u&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Markdown表格"><a href="#Markdown表格" class="headerlink" title="Markdown表格"></a>Markdown表格</h2><p>表格使用 <code>|</code> 来分隔不同的单元格，使用 <code>-</code> 来分隔表头和其他行，如果想调整表格的左对齐、右对齐、居中对齐:</p>
+<ul>
+<li><code>:-</code>：将表头及单元格的内容左对齐；</li>
+<li><code>-:</code>：将表头及单元格的内容左对齐；</li>
+<li><code>:-:</code>：将表头及单元格的内容居中对齐。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">| 姓名   	| 年龄 |      工作	 |</span><br><span class="line">| :----- 	| :--: | -------:	 |</span><br><span class="line">| 小可爱 	|  <span class="number">18</span>  | 吃可爱多 	 |</span><br><span class="line">| 小小勇敢 	|  <span class="number">20</span>  | 爬棵勇敢树 	 |</span><br><span class="line">| 小小小机智 |  <span class="number">22</span>  | 看一本机智书 |</span><br></pre></td></tr></table></figure>
+
+<h2 id="Markdown图片"><a href="#Markdown图片" class="headerlink" title="Markdown图片"></a>Markdown图片</h2><p>插入图片，如果是行内图片则无图例，否则有图例，格式如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">![图片描述](图片地址)</span><br></pre></td></tr></table></figure>
+
+<p>支持 <code>jpg、png、gif、svg</code> 等图片格式，<strong>其中 svg 文件仅可在微信公众平台中使用</strong>。</p>
+<p><strong>注</strong>：仅支持 https 的图片，图片粘贴到网页编辑器后，会自动上传到服务器；如果是本地编辑器，需要有一个相对路径用来存储保存的图片。</p>
+<h2 id="Markdown注脚"><a href="#Markdown注脚" class="headerlink" title="Markdown注脚"></a>Markdown注脚</h2><p>脚注是对文本的备注说明，脚注与链接的区别，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">链接：[文字](链接)</span><br><span class="line">脚注：[文字](脚注解释 <span class="string">&quot;脚注名字&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Markdown代码"><a href="#Markdown代码" class="headerlink" title="Markdown代码"></a>Markdown代码</h2><p>如果在一个行内需要引用代码，只要用反引号引起来就好，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">Use the `<span class="built_in">printf</span>()` function.</span><br></pre></td></tr></table></figure>
+
+<p>如果是在一个块内需要引用代码，则在需要高亮的代码块的前一行及后一行使用三个反引号，同时 <strong>第一行反引号后面表示代码块所使用的语言</strong>，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// FileName: HelloWorld.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;HelloWorld&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>支持以下语言种类：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">bash</span><br><span class="line">c，clojure，cpp，cs，css</span><br><span class="line">dart，dockerfile, diff</span><br><span class="line">erlang</span><br><span class="line">go，gradle，groovy</span><br><span class="line">haskell</span><br><span class="line">java，javascript，json，julia</span><br><span class="line">kotlin</span><br><span class="line">lisp，lua</span><br><span class="line">makefile，markdown，matlab</span><br><span class="line">objectivec</span><br><span class="line">perl，php，python</span><br><span class="line">r，ruby，rust</span><br><span class="line">scala，shell，sql，swift</span><br><span class="line">tex，typescript</span><br><span class="line">verilog，vhdl</span><br><span class="line">xml</span><br><span class="line">yaml</span><br></pre></td></tr></table></figure>
+
+<p>本文转载自CSDN<br>博主: 我是管小亮<br>原文链接：<a href="https://blog.csdn.net/TeFuirnever/article/details/104255022">https://blog.csdn.net/TeFuirnever/article/details/104255022</a></p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>书写语言</tag>
       </tags>
   </entry>
   <entry>
@@ -878,380 +1252,6 @@ C++通过提供特殊对象指针，`this`指针，解决上述问题。
 ]]></content>
       <tags>
         <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++核心编程——5 文件操作</title>
-    <url>/2022/06/06/C++%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%945-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<h4 id="5-文件操作"><a href="#5-文件操作" class="headerlink" title="5 文件操作"></a>5 文件操作</h4><p>​	程序运行时产生的数据都属于临时数据，程序一旦运行结束都会被释放</p>
-<p>​	通过<strong>文件可以将数据持久化</strong></p>
-<p>​	C++中对文件操作需要包含头文件<code>&lt; fstream &gt;</code></p>
-<p>​	文件类型分为两种：</p>
-<ul>
-<li>文本文件：文件以文本的<strong>ASCII码</strong>形式储存在计算机中</li>
-<li>二进制文件：文件以文本的<strong>二进制形式</strong>存储在计算机就中，用户一般不能直接读懂他们</li>
-</ul>
-<p>​	</p>
-<p>​	操作文件的三大类：</p>
-<ul>
-<li><code>ofstream</code>：写操作</li>
-<li><code>ifstream</code>：读操作</li>
-<li><code>fstream </code>  ：读写操作</li>
-</ul>
-<span id="more"></span>
-
-<h5 id="5-1-文本文件"><a href="#5-1-文本文件" class="headerlink" title="5.1 文本文件"></a>5.1 文本文件</h5><h6 id="5-1-1-写文件"><a href="#5-1-1-写文件" class="headerlink" title="5.1.1 写文件"></a>5.1.1 写文件</h6><p>​	写文件步骤如下：<br>​	1、包含头文件</p>
-<p>​		<code>#include &lt;fstream&gt;</code></p>
-<p>​	2、创建流对象</p>
-<p>​		<code>ofstream ofs;</code></p>
-<p>​	3、打开文件</p>
-<p>​		<code>ofs.open(&quot;文件路径&quot;,打开方式);</code></p>
-<p>​	4、写数据</p>
-<p>​		<code>ofs &lt;&lt; &quot;写入的数据&quot;;</code></p>
-<p>​	5、关闭文件</p>
-<p>​		<code>ofs.close();</code></p>
-<p>文件打开方式：</p>
-<table>
-<thead>
-<tr>
-<th align="left"><strong>打开方式</strong></th>
-<th><strong>解释</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>ios::in</code></td>
-<td>为读文件而打开文件</td>
-</tr>
-<tr>
-<td align="left"><code>ios::out</code></td>
-<td>为写文件而打开文件</td>
-</tr>
-<tr>
-<td align="left"><code>ios::ate</code></td>
-<td>初始位置：文件尾</td>
-</tr>
-<tr>
-<td align="left"><code>ios::app</code></td>
-<td>追加方式写文件</td>
-</tr>
-<tr>
-<td align="left"><code>ios::trunc</code></td>
-<td>如果文件存在，先删除，再创建</td>
-</tr>
-<tr>
-<td align="left"><code>ios::binary</code></td>
-<td>二进制方式</td>
-</tr>
-</tbody></table>
-<p><strong>注意：</strong>文件打开方式可以配合使用，利用<code>|</code>操作符</p>
-<p><strong>例如：</strong>用二进制方式写文件<code>ios::binary | ios::out</code></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">//文本文件 写文件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//1、包含头文件 fstream</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//2、创建流对象</span></span><br><span class="line">	ofstream ofs;</span><br><span class="line">	<span class="comment">//3、指定打开方式</span></span><br><span class="line">	ofs.<span class="built_in">open</span>(<span class="string">&quot;test.txt&quot;</span>, ios::out);</span><br><span class="line">	<span class="comment">//4、写内容</span></span><br><span class="line">	ofs &lt;&lt; <span class="string">&quot;姓名：张三&quot;</span> &lt;&lt; endl;</span><br><span class="line">	ofs &lt;&lt; <span class="string">&quot;性别：男&quot;</span> &lt;&lt; endl;</span><br><span class="line">	ofs &lt;&lt; <span class="string">&quot;年龄：18&quot;</span> &lt;&lt; endl;</span><br><span class="line">	<span class="comment">//5、关闭文件</span></span><br><span class="line">	ofs.<span class="built_in">close</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">test01</span>();</span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>总结：</p>
-<ul>
-<li>文件操作必须包含头文件<code>fstream</code></li>
-<li>读文件可以利用<code>ofstream</code>或者<code>fstream</code></li>
-<li>打开文件时需要指定操作文件的路径，以及打开方式</li>
-<li>利用<code>&lt;&lt;</code>可以向文件中写数据</li>
-<li>操作完毕，要关闭文件</li>
-</ul>
-<h6 id="5-1-2-读文件"><a href="#5-1-2-读文件" class="headerlink" title="5.1.2 读文件"></a>5.1.2 读文件</h6><p>​	读文件与写文件步骤相似，但是读取方式比较多</p>
-<p>​	读文件步骤如下：</p>
-<p>​		1、包含头文件</p>
-<p>​			<code>#include &lt;fstream&gt;</code></p>
-<p>​		2、创建流对象</p>
-<p>​			<code>ifstream ifs;</code></p>
-<p>​		3、打开文件并判断文件是否成功打开</p>
-<p>​			<code>ifs.open(&quot;文件路径&quot;,打开方式);</code></p>
-<p>​		4、读数据</p>
-<p>​			四种方式读取</p>
-<p>​		5、关闭文件</p>
-<p>​			<code>ifs.close();</code></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">//文本文件 读文件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ifstream ifs;</span><br><span class="line">	ifs.<span class="built_in">open</span>(<span class="string">&quot;test.txt&quot;</span>, ios::in);</span><br><span class="line">	<span class="keyword">if</span> (!ifs.<span class="built_in">is_open</span>())</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;文件打开失败&quot;</span> &lt;&lt; endl;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//4、读数据</span></span><br><span class="line">	<span class="comment">//第一种</span></span><br><span class="line">	<span class="type">char</span> buf1[<span class="number">1024</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="keyword">while</span> (ifs &gt;&gt; buf1)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; buf1 &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;*&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	ifs.<span class="built_in">close</span>();</span><br><span class="line">	<span class="comment">//第二种</span></span><br><span class="line">	ifs.<span class="built_in">open</span>(<span class="string">&quot;test.txt&quot;</span>, ios::in);</span><br><span class="line">	<span class="type">char</span> buf2[<span class="number">1024</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="keyword">while</span> (ifs.<span class="built_in">getline</span>(buf2, <span class="built_in">sizeof</span>(buf2)))</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; buf2 &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;!&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	ifs.<span class="built_in">close</span>();</span><br><span class="line">	<span class="comment">//第三种</span></span><br><span class="line">	ifs.<span class="built_in">open</span>(<span class="string">&quot;test.txt&quot;</span>, ios::in);</span><br><span class="line">	string buf3;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">getline</span>(ifs, buf3))</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; buf3 &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	ifs.<span class="built_in">close</span>();</span><br><span class="line">	<span class="comment">//第四种</span></span><br><span class="line">	ifs.<span class="built_in">open</span>(<span class="string">&quot;test.txt&quot;</span>, ios::in);</span><br><span class="line">	<span class="type">char</span> c;</span><br><span class="line">	<span class="keyword">while</span> ((c = ifs.<span class="built_in">get</span>()) != EOF)<span class="comment">//EOF: end of file</span></span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; c;</span><br><span class="line">	&#125;</span><br><span class="line">	ifs.<span class="built_in">close</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">test01</span>();</span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h5 id="5-2-二进制文件"><a href="#5-2-二进制文件" class="headerlink" title="5.2 二进制文件"></a>5.2 二进制文件</h5><p>​	以二进制的方式对文件进行读写操作</p>
-<p>​	打开方式为<code>ios::binary</code></p>
-<h6 id="5-2-1-写文件"><a href="#5-2-1-写文件" class="headerlink" title="5.2.1 写文件"></a>5.2.1 写文件</h6><p>​	二进制方式写文件主要利用流对象调用成员函数<code>write</code></p>
-<p>​	函数原型：<code>ostream&amp; write(const char* buffer,int len);</code></p>
-<p>​	参数解释：字符指针<code>buffer</code>指向内存中一段存储空间。<code>len</code>是读写的字节数</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">//二进制文件 写文件</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="type">char</span> m_Name[<span class="number">64</span>];</span><br><span class="line">	<span class="type">int</span> m_Age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ofstream ofs;</span><br><span class="line">	ofs.<span class="built_in">open</span>(<span class="string">&quot;person.txt&quot;</span>, ios::binary | ios::out);</span><br><span class="line">	Person p = &#123; <span class="string">&quot;张三&quot;</span>,<span class="number">18</span> &#125;;</span><br><span class="line">	ofs.<span class="built_in">write</span>((<span class="type">const</span> <span class="type">char</span>*)&amp;p, <span class="built_in">sizeof</span>(Person));</span><br><span class="line">	ofs.<span class="built_in">close</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">test01</span>();</span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h6 id="5-2-2-读文件"><a href="#5-2-2-读文件" class="headerlink" title="5.2.2 读文件"></a>5.2.2 读文件</h6><p>​	二进制方式读文件主要利用流对象调用成员函数<code>read</code></p>
-<p>​	函数原型：<code>istream&amp; read(char* buffer,int len);</code></p>
-<p>​	参数解释：字符指针<code>buffer</code>指向内存中一段存储空间。<code>len</code>是读写的字节数</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">//二进制文件 读文件</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="type">char</span> m_Name[<span class="number">64</span>];</span><br><span class="line">	<span class="type">int</span> m_Age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ifstream ifs;</span><br><span class="line">	ifs.<span class="built_in">open</span>(<span class="string">&quot;person.txt&quot;</span>, ios::binary | ios::in);</span><br><span class="line">	<span class="keyword">if</span> (!ifs.<span class="built_in">is_open</span>())</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;文件打开失败&quot;</span> &lt;&lt; endl;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	Person p;</span><br><span class="line">	ifs.<span class="built_in">read</span>((<span class="type">char</span>*)&amp;p, <span class="built_in">sizeof</span>(Person));</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;姓名：&quot;</span> &lt;&lt; p.m_Name &lt;&lt; <span class="string">&quot; 年龄：&quot;</span> &lt;&lt; p.m_Age &lt;&lt; endl;</span><br><span class="line">	ifs.<span class="built_in">close</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">test01</span>();</span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++结构体小结</title>
-    <url>/2022/06/01/C++%E7%BB%93%E6%9E%84%E4%BD%93%E5%B0%8F%E7%BB%93/</url>
-    <content><![CDATA[<ul>
-<li>​	结构体属于用户<strong>自定义的数据类型</strong>，允许用户存储不同的数据类型</li>
-</ul>
-<p><strong>1.结构体的定义和使用</strong></p>
-<p>​	<strong>语法：</strong><code>struct 结构体名 &#123; 结构体成员列表 &#125;;</code></p>
-<p>​	通过结构体创建变量的方式有三种：</p>
-<ul>
-<li><p>​	struct 结构体名 变量名</p>
-</li>
-<li><p>​	struct 结构体名 变量名 &#x3D; { 成员1值 , 成员2值…}</p>
-</li>
-<li><p>​	定义结构体时顺便创建变量</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创建一个学生结构体</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Student</span></span><br><span class="line">&#123;</span><br><span class="line">	string name;</span><br><span class="line">	<span class="type">int</span> age;</span><br><span class="line">	<span class="type">float</span> score;</span><br><span class="line">&#125;s3;<span class="comment">//方式3：定义结构体时顺便创建变量</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">struct</span> <span class="title class_">Student</span> s1;<span class="comment">//方式1</span></span><br><span class="line">	s1.name = <span class="string">&quot;张三&quot;</span>;</span><br><span class="line">	s1.age = <span class="number">18</span>;</span><br><span class="line">	s1.score = <span class="number">100</span>;</span><br><span class="line">	<span class="keyword">struct</span> <span class="title class_">Student</span> s2 = &#123; <span class="string">&quot;李四&quot;</span>,<span class="number">20</span>,<span class="number">99.5</span> &#125;;<span class="comment">//方式2</span></span><br><span class="line">	s3.name = <span class="string">&quot;王五&quot;</span>;</span><br><span class="line">	s3.age = <span class="number">17</span>;</span><br><span class="line">	s3.score = <span class="number">59.4</span>;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; s1姓名：&quot;</span> &lt;&lt; s1.name &lt;&lt; <span class="string">&quot; s1年龄：&quot;</span> &lt;&lt; s1.age &lt;&lt; <span class="string">&quot; s1成绩：&quot;</span> &lt;&lt; s1.score &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; s2姓名：&quot;</span> &lt;&lt; s2.name &lt;&lt; <span class="string">&quot; s2年龄：&quot;</span> &lt;&lt; s2.age &lt;&lt; <span class="string">&quot; s2成绩：&quot;</span> &lt;&lt; s2.score &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; s3姓名：&quot;</span> &lt;&lt; s3.name &lt;&lt; <span class="string">&quot; s3年龄：&quot;</span> &lt;&lt; s3.age &lt;&lt; <span class="string">&quot; s3成绩：&quot;</span> &lt;&lt; s3.score &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//注意：输出String类型时，必须在程序头加上`#include &lt;string&gt;`</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>​	<strong>注意：</strong><code>struct</code>关键字在初始化时也可省略</p>
-<span id="more"></span>
-
-<p><strong>2.结构体数组</strong></p>
-<ul>
-<li><p><strong>作用：</strong>将自定义的结构体放入数组中方便维护</p>
-</li>
-<li><p><strong>语法：</strong><code>struct 结构体名 数组名[元素个数] = &#123; &#123;&#125;,&#123;&#125;,...,&#123;&#125;&#125;</code></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Student arr[<span class="number">3</span>] =</span><br><span class="line">	&#123;</span><br><span class="line">		&#123;<span class="string">&quot;张三&quot;</span>,<span class="number">20</span>,<span class="number">100</span>&#125;,</span><br><span class="line">		&#123;<span class="string">&quot;李四&quot;</span>,<span class="number">18</span>,<span class="number">99.5</span>&#125;,</span><br><span class="line">		&#123;<span class="string">&quot;王五&quot;</span>,<span class="number">17</span>,<span class="number">59.4</span>&#125;</span><br><span class="line">	&#125;;</span><br><span class="line">	arr[<span class="number">0</span>].name = <span class="string">&quot;赵六&quot;</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">sizeof</span>(arr) / <span class="built_in">sizeof</span>(arr[<span class="number">0</span>]); ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot; 姓名：&quot;</span> &lt;&lt; arr[i].name &lt;&lt; <span class="string">&quot; 年龄：&quot;</span> &lt;&lt; arr[i].age &lt;&lt; <span class="string">&quot; 成绩：&quot;</span> &lt;&lt; arr[i].score &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p><strong>3.结构体指针</strong></p>
-<p>​	<strong>作用：</strong>通过指针访问结构体中的成员</p>
-<ul>
-<li><p>利用操作符<code>-&gt;</code>可以通过结构体指针访问结构体属性</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Student s1 = &#123; <span class="string">&quot;张三&quot;</span>,<span class="number">20</span>,<span class="number">100</span> &#125;;</span><br><span class="line">	Student* p = &amp;s1;<span class="comment">//定义指针时也要用结构体定义!!!</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; 姓名：&quot;</span> &lt;&lt; p-&gt;name &lt;&lt; <span class="string">&quot; 年龄：&quot;</span> &lt;&lt; p-&gt;age &lt;&lt; <span class="string">&quot; 成绩：&quot;</span> &lt;&lt; p-&gt;score &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p><strong>4.结构体嵌套结构体</strong></p>
-<p>​	<strong>作用：</strong>结构体中的成员可以是另一个结构体</p>
-<p>​	<strong>例如：</strong>每个老师教1个学生，一个老师的结构体中，记录一个学生的结构体</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创建一个老师结构体</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Teacher</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> id;</span><br><span class="line">	string name;</span><br><span class="line">	Student stu;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Student s1 = &#123; <span class="string">&quot;张三&quot;</span>,<span class="number">20</span>,<span class="number">100</span> &#125;;</span><br><span class="line">	Teacher t1 = &#123; <span class="number">123456</span>,<span class="string">&quot;李老师&quot;</span>,s1 &#125;;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; 教职工编号：&quot;</span> &lt;&lt; t1.id &lt;&lt; <span class="string">&quot; 姓名：&quot;</span> &lt;&lt; t1.name &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; 所带学生姓名为：&quot;</span> &lt;&lt; t1.stu.name &lt;&lt; <span class="string">&quot; 年龄为：&quot;</span> &lt;&lt; t1.stu.age &lt;&lt; <span class="string">&quot; 成绩为：&quot;</span> &lt;&lt; t1.stu.score &lt;&lt;endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>5.结构体做函数参数</strong></p>
-<p>​	<strong>作用：</strong>将结构体作为参数向函数中传递</p>
-<p>​	传递方式有两种：</p>
-<ul>
-<li><p>值传递</p>
-</li>
-<li><p>地址传递</p>
-<p><strong>注意：</strong>地址传递与值传递对实参本身的影响</p>
-</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//值传递</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">PrintStu1</span><span class="params">(<span class="keyword">struct</span> Student s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	s.name = <span class="string">&quot;李四&quot;</span>;<span class="comment">//修改值后注意控制台变化</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; 姓名：&quot;</span> &lt;&lt; s.name &lt;&lt; <span class="string">&quot; 年龄：&quot;</span> &lt;&lt; s.age &lt;&lt; <span class="string">&quot; s成绩：&quot;</span> &lt;&lt; s.score &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//地址传递</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">PrintStu2</span><span class="params">(<span class="keyword">struct</span> Student* p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	p-&gt;name = <span class="string">&quot;王五&quot;</span>;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; 姓名：&quot;</span> &lt;&lt; p-&gt;name &lt;&lt; <span class="string">&quot; 年龄：&quot;</span> &lt;&lt; p-&gt;age &lt;&lt; <span class="string">&quot; s成绩：&quot;</span> &lt;&lt; p-&gt;score &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Student s1 = &#123; <span class="string">&quot;张三&quot;</span>,<span class="number">20</span>,<span class="number">100</span> &#125;;</span><br><span class="line">	<span class="built_in">PrintStu1</span>(s1);</span><br><span class="line">	<span class="built_in">PrintStu2</span>(&amp;s1);</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; 姓名：&quot;</span> &lt;&lt; s1.name &lt;&lt; <span class="string">&quot; 年龄：&quot;</span> &lt;&lt; s1.age &lt;&lt; <span class="string">&quot; s成绩：&quot;</span> &lt;&lt; s1.score &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>6.结构体中<code>const</code>的使用场景</strong></p>
-<p>​	<strong>作用：</strong>用<code>const</code>防止误操作</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//将函数中的形参改为指针，可以减少内存使用，且不会复制新的副本出来</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">PrintStu</span><span class="params">(<span class="type">const</span> <span class="keyword">struct</span> Student* p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//p-&gt;name = &quot;王五&quot;;//操作失败，因为加入const</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot; 姓名：&quot;</span> &lt;&lt; p-&gt;name &lt;&lt; <span class="string">&quot; 年龄：&quot;</span> &lt;&lt; p-&gt;age &lt;&lt; <span class="string">&quot; s成绩：&quot;</span> &lt;&lt; p-&gt;score &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Student s1 = &#123; <span class="string">&quot;张三&quot;</span>,<span class="number">20</span>,<span class="number">100</span> &#125;;</span><br><span class="line">	<span class="built_in">PrintStu</span>(&amp;s1);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git基础操作</title>
-    <url>/2022/05/29/Git%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<h1 id="Git简介"><a href="#Git简介" class="headerlink" title="Git简介"></a>Git简介</h1><p>Git是一款免费、开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。</p>
-<p>Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。</p>
-<p>官网地址为：<a href="https://git-scm.com/">https://git-scm.com/</a></p>
-<p><strong>优点：</strong></p>
-<p>适合分布式开发，强调个体；</p>
-<p>公共服务器压力和数据量都不会太大；</p>
-<p>速度快、灵活；</p>
-<p>任意两个开发者之间可以很容易的解决冲突；</p>
-<p>离线工作。</p>
-<p><strong>缺点：</strong></p>
-<p>代码保密性差，一旦开发者把整个库克隆下来就可以完全公开所有代码和版本信息；</p>
-<p>权限控制不友好；如果需要对开发者限制各种权限的建议使用SVN。</p>
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/flowchart.png" alt="Git分布式控制总流程图"></p>
-<h1 id="Git基础操作"><a href="#Git基础操作" class="headerlink" title="Git基础操作"></a>Git基础操作</h1><h3 id="克隆远程仓库内容"><a href="#克隆远程仓库内容" class="headerlink" title="克隆远程仓库内容"></a>克隆远程仓库内容</h3><p>​	使用<code>git clone  </code>命令可以远程克隆代码托管平台，以GitHub平台为例，打开一个项目，在绿色的<code>code</code>处点击复制项目链接</p>
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitcode.png"></p>
-<p>在需要克隆的仓库点击鼠标右键打开<code>git bash</code>，在git bash中输入</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git clone https:<span class="comment">//github.com/crisp077/Git-test.git</span></span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<p>克隆成功后出现如下字样</p>
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitclone.png"></p>
-<p>打开克隆好的项目</p>
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/happen1.png"></p>
-<p>我们可以发现一个GitHub项目就被克隆到了我们本地</p>
-<h3 id="拉取远程仓库内容"><a href="#拉取远程仓库内容" class="headerlink" title="拉取远程仓库内容"></a>拉取远程仓库内容</h3><p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/change1.png"></p>
-<p>​	在将项目克隆到本地文件后，如果项目更新，我们就可以利用<code>git pull </code>命令来同步远程仓库做出的改动</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git pull origin main</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitpull1.png"></p>
-<p>就可以在仓库中看到更新的内容</p>
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/happen2.png"></p>
-<p>​	<strong>注意：</strong>看现在仓库的主分支是<code>master</code>还是<code>main</code>，如果为master，则为<code>git pull origin master</code></p>
-<h3 id="更新远程仓库内容"><a href="#更新远程仓库内容" class="headerlink" title="更新远程仓库内容"></a>更新远程仓库内容</h3><p>​	如果我们在本地项目上进行更新，那么就需要利用<code>git push</code>命令将本地项目的更新同步到远程仓库，在执行<code>git push</code>完整命令之前，我们可以利用<code>git status</code>命令来查看更新了哪些内容</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitstatus.png"></p>
-<p>由于我们之前在本地更新的内容属于工作区（会在status中显示为红色），在<code>git push</code>到远程仓库之前需要利用<code>git add</code>命令将其移动至暂存区（在status中显示为绿色），如果添加单个命令入缓存区可以输入<code>git add 文件名</code>，为了便利可以直接输入<code>git add .</code>，即添加所有文件</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitadd.png"></p>
-<p>再次键入<code>git status</code>我们可以看到，本地新增的文件，其文件名由绿色变为红色，即从工作区成功移动到暂存区</p>
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitstatus2.png"></p>
-<p>在更新的文件存入暂存区后，还需要将其存入相对应的分支中，这是需要用的<code>git commit</code>命令，可以在commit后面键入对应的分支名，在分支名后可以添加本次更新内容的信息</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;hellogit文件添加&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>再次用<code>git status</code>查看状态，可以看到状态栏里面为空，说明上传成功</p>
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitcommit.png"></p>
-<p>​	<strong>注意：</strong>第一次安装Git后，commit可能会出现下面提示：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git config --global user.email <span class="string">&quot;you@example.com&quot;</span></span><br><span class="line">git config --global user.name <span class="string">&quot;your name&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>这时按照提示重新输入这两行命令，将自己邮箱和昵称输入即可</p>
-<p>接下来就可以使用<code>git push</code>命令将更新内容上传至远程仓库</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git push origin main</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitpush.png"></p>
-<p>我们打开GitHub可以看到更新的内容，以及后面的更新说明</p>
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/hellogitshow.png"></p>
-<p>​	<strong>注意：</strong>在<code>git push</code>的过程中为了确保是本人对远程仓库的命令进行操作，一般会弹出弹窗让你输入远程仓库的密码，输入正确后就可以成功push；每次push都需要输入密码，显然很麻烦，我们可以通过<code>ssh-keygen -t rsa</code>来生成公钥，对远程仓库进行公钥配置，就可以实现免密推送。详情见<a href="https://blog.csdn.net/redrose2100/article/details/121668161">Github配置公钥</a>。</p>
-<h3 id="版本追溯"><a href="#版本追溯" class="headerlink" title="版本追溯"></a>版本追溯</h3><p>​	在项目开发中经常会遇到各种问题，例如最新版本出现BUG，需要将版本回溯到以前的版本进行重新开发，这时候我们可以使用<code>git reset --hard 版本号</code> 命令来进行版本追溯，我们首先查看版本</p>
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/reset1.png"></p>
-<p>然后进入</p>
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/reset2.png"></p>
-<p>复制想要追溯的版本号，然后在本地项目中输入</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git reset --hard <span class="number">2</span>a871662d42a220a26f555a24cd0864a30352270</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/reset3.png"></p>
-<p>就可以切换至要追溯的版本，想要切换至最新版本则可以键入<code>git reset --hard 最新版本号</code>。</p>
-<h3 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h3><p>​	在一个项目开发中，通常会有正式发布版和开发版，正式发布版一般存放在<code>main/master</code>主分支而开发版本则存放在其他分支。对于一个<code>git clone</code>后的项目，我们可以通过<code>git branch</code>来查看该项目下有几个分支</p>
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitbranch.png"></p>
-<p>可以看到，这个项目中只有一个分支，<code>main</code>即主分支。我们可以利用<code>git branch 分支名</code>来创建一个其他的分支例如创建一个<code>develop</code>分支</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git branch develop</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitbranch2.png"></p>
-<p>但是现在仍处于<code>main</code>分支，我们可以用<code>git checkout 分支名</code>切换到其他的分支</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git checkout develop</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitbranch3.png"></p>
-<p>可以看出已经切换至<code>develop</code>分支，然后在<code>develop</code>分支下新建一个文件<code>develop.txt</code></p>
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/gitbranch4.png"></p>
-<p>然后用<code>git add</code>和<code>git commit</code>的一系列操作，将文件放入暂存区，准备更新远程仓库</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;develop提交&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>然后用<code>git checkout main</code>切换至主分支（也可以直接在<code>develop</code>分支直接输入，为了避免文件存放错误，一般在其他分支更新完成文件后建议切换至主分支进行操作），利用<code>git push</code>更新远程仓库（注意书写变化）</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git push origin develop:develop</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/develop.png"></p>
-<p>点击<code>main</code>下面出现其他分支选项，点击切换至<code>develop</code>分支</p>
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/develop2.png"></p>
-<p>可以看到<code>develop</code> 分支下存在<code>develop.txt</code>文件</p>
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/develop3.png"></p>
-<p>当在<code>develop</code>或者其他分支的文件完全编写成功可以正式发布以后，我们就需要将<code>develop</code>或其他分支下的所做的更改应用到<code>main</code>分支上，这时候就需要用的<code>git merge</code>将<code>main</code>和<code>develop</code>进行合并，在<code>main</code>主分支中键入</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git merge develop</span><br><span class="line">git push origin main</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/develop4.png"></p>
-<p>进入主分支<code>main</code>，看可以看到有<code>develop.txt</code>文件的存在</p>
-<p><img src="http://rco7kpoyg.hn-bkt.clouddn.com/develop5.png"></p>
-<p>以上就是Git的基础的操作。</p>
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-      <tags>
-        <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2022/05/25/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>Markdown书写指南</title>
-    <url>/2022/05/27/Markdown%E4%B9%A6%E5%86%99%E6%8C%87%E5%8D%97/</url>
-    <content><![CDATA[<h1 id="Markdown基础语法"><a href="#Markdown基础语法" class="headerlink" title="Markdown基础语法"></a>Markdown基础语法</h1><h2 id="Markdown标题"><a href="#Markdown标题" class="headerlink" title="Markdown标题"></a>Markdown标题</h2><ul>
-<li>一级标题对应一个<code>#</code>号；</li>
-<li>二级标题对应两个<code>#</code>号；</li>
-<li>以此类推，一共六级标题.</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"># 一级标题</span><br><span class="line">## 二级标题</span><br><span class="line">### 三级标题</span><br><span class="line">#### 四级标题</span><br><span class="line">##### 五级标题</span><br><span class="line">###### 六级标题</span><br></pre></td></tr></table></figure>
-
-<h2 id="Markdown文本"><a href="#Markdown文本" class="headerlink" title="Markdown文本"></a>Markdown文本</h2><ul>
-<li><p>斜体文本：可以在需要标注为斜体文本前及斜体文本结尾，输入一个星号 <code>*</code> 或者一个下划线 <code>_</code>；</p>
-</li>
-<li><p>粗体文本：可以在需要标注为粗体文本前及粗体文本结尾，输入两个星号 <code>**</code> 或者两个下划线 <code>_</code>；</p>
-</li>
-<li><p>粗斜体文本：可以在需要标注为粗斜体文本前及粗斜体文本结尾，输入三个星号 <code>***</code> 或者三个下划线 <code>_</code>；</p>
-<span id="more"></span></li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">*斜体文本*</span><br><span class="line">    </span><br><span class="line">_斜体文本_</span><br><span class="line"></span><br><span class="line">**粗体文本**</span><br><span class="line"></span><br><span class="line">__粗体文本__</span><br><span class="line"></span><br><span class="line">***粗斜体文本***</span><br><span class="line"></span><br><span class="line">___粗斜体文本___</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-
-<h2 id="Markdown列表"><a href="#Markdown列表" class="headerlink" title="Markdown列表"></a>Markdown列表</h2><ul>
-<li>无序列表，使用星号(<code>*</code>)、加号(<code>+</code>)或是减号(<code>-</code>)，再加一个空格作为列表标记；</li>
-<li>有序列表，使用数字并加上 <code>.</code> 号，再加一个空格作为列表标记；</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">* 无序列表 <span class="number">1</span></span><br><span class="line">+ 无序列表 <span class="number">2</span></span><br><span class="line">- 无序列表 <span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> 有序列表 <span class="number">1</span></span><br><span class="line"><span class="number">2.</span> 有序列表 <span class="number">2</span></span><br><span class="line"><span class="number">3.</span> 有序列表 <span class="number">3</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Markdown链接"><a href="#Markdown链接" class="headerlink" title="Markdown链接"></a>Markdown链接</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">[链接名称](链接地址)</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">&lt;链接地址&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="Markdown引用"><a href="#Markdown引用" class="headerlink" title="Markdown引用"></a>Markdown引用</h2><p>引用的格式是在符号 <code>&gt;</code> 后面书写文字，或者加一个空格再加文字，如下：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">&gt; 这是一个引用：</span><br><span class="line">&gt; 欢迎关注三月江东个人博客</span><br><span class="line">&gt;&gt; 这是一个二级嵌套</span><br><span class="line">&gt;&gt;&gt; 这是一个三级嵌套</span><br></pre></td></tr></table></figure>
-
-<h2 id="Markdown分割线"><a href="#Markdown分割线" class="headerlink" title="Markdown分割线"></a>Markdown分割线</h2><p>可以在一行中用三个 <code>-</code> 或者 <code>*</code> 来建立一个分隔线，同时需要在分隔线的上面空一行，如下：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">欢迎关注博客</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">【三月江东】</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">***</span><br><span class="line">* * *</span><br><span class="line">*****</span><br><span class="line">- - - </span><br></pre></td></tr></table></figure>
-
-<h2 id="Markdown删除线"><a href="#Markdown删除线" class="headerlink" title="Markdown删除线"></a>Markdown删除线</h2><p>删除线的使用，在需要删除的文字前后各使用两个 <code>~</code>，如下：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">~~这是要被删除的内容。~~</span><br></pre></td></tr></table></figure>
-
-<h2 id="Markdown下划线"><a href="#Markdown下划线" class="headerlink" title="Markdown下划线"></a>Markdown下划线</h2><p>下划线的使用，在需要添加下划线的文字首部和尾部加上 <code>&lt;u&gt;文本&lt;/u&gt;</code>，如下：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">&lt;u&gt;这行文字已被添加下划线&lt;/u&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Markdown表格"><a href="#Markdown表格" class="headerlink" title="Markdown表格"></a>Markdown表格</h2><p>表格使用 <code>|</code> 来分隔不同的单元格，使用 <code>-</code> 来分隔表头和其他行，如果想调整表格的左对齐、右对齐、居中对齐:</p>
-<ul>
-<li><code>:-</code>：将表头及单元格的内容左对齐；</li>
-<li><code>-:</code>：将表头及单元格的内容左对齐；</li>
-<li><code>:-:</code>：将表头及单元格的内容居中对齐。</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">| 姓名   	| 年龄 |      工作	 |</span><br><span class="line">| :----- 	| :--: | -------:	 |</span><br><span class="line">| 小可爱 	|  <span class="number">18</span>  | 吃可爱多 	 |</span><br><span class="line">| 小小勇敢 	|  <span class="number">20</span>  | 爬棵勇敢树 	 |</span><br><span class="line">| 小小小机智 |  <span class="number">22</span>  | 看一本机智书 |</span><br></pre></td></tr></table></figure>
-
-<h2 id="Markdown图片"><a href="#Markdown图片" class="headerlink" title="Markdown图片"></a>Markdown图片</h2><p>插入图片，如果是行内图片则无图例，否则有图例，格式如下：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">![图片描述](图片地址)</span><br></pre></td></tr></table></figure>
-
-<p>支持 <code>jpg、png、gif、svg</code> 等图片格式，<strong>其中 svg 文件仅可在微信公众平台中使用</strong>。</p>
-<p><strong>注</strong>：仅支持 https 的图片，图片粘贴到网页编辑器后，会自动上传到服务器；如果是本地编辑器，需要有一个相对路径用来存储保存的图片。</p>
-<h2 id="Markdown注脚"><a href="#Markdown注脚" class="headerlink" title="Markdown注脚"></a>Markdown注脚</h2><p>脚注是对文本的备注说明，脚注与链接的区别，如下：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">链接：[文字](链接)</span><br><span class="line">脚注：[文字](脚注解释 <span class="string">&quot;脚注名字&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Markdown代码"><a href="#Markdown代码" class="headerlink" title="Markdown代码"></a>Markdown代码</h2><p>如果在一个行内需要引用代码，只要用反引号引起来就好，如下：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">Use the `<span class="built_in">printf</span>()` function.</span><br></pre></td></tr></table></figure>
-
-<p>如果是在一个块内需要引用代码，则在需要高亮的代码块的前一行及后一行使用三个反引号，同时 <strong>第一行反引号后面表示代码块所使用的语言</strong>，如下：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// FileName: HelloWorld.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;HelloWorld&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>支持以下语言种类：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">bash</span><br><span class="line">c，clojure，cpp，cs，css</span><br><span class="line">dart，dockerfile, diff</span><br><span class="line">erlang</span><br><span class="line">go，gradle，groovy</span><br><span class="line">haskell</span><br><span class="line">java，javascript，json，julia</span><br><span class="line">kotlin</span><br><span class="line">lisp，lua</span><br><span class="line">makefile，markdown，matlab</span><br><span class="line">objectivec</span><br><span class="line">perl，php，python</span><br><span class="line">r，ruby，rust</span><br><span class="line">scala，shell，sql，swift</span><br><span class="line">tex，typescript</span><br><span class="line">verilog，vhdl</span><br><span class="line">xml</span><br><span class="line">yaml</span><br></pre></td></tr></table></figure>
-
-<p>本文转载自CSDN<br>博主: 我是管小亮<br>原文链接：<a href="https://blog.csdn.net/TeFuirnever/article/details/104255022">https://blog.csdn.net/TeFuirnever/article/details/104255022</a></p>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>书写语言</tag>
       </tags>
   </entry>
 </search>
